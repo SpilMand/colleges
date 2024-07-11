@@ -1,0 +1,76 @@
+.s-contacts {
+  .title-h3 {
+    margin-bottom: var(--a-margin-x10);
+  }
+
+  .s-feedback {
+    @media (min-width: 980px) {
+      display: none;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: to-rem(16);
+
+    &.isAdmission {
+      padding: to-rem(20) to-rem(16);
+      background-color: var(--color-gray-light);
+      border-radius: var(--border-radius-x6);
+      gap: to-rem(20);
+
+      @media (min-width: 768px) {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        padding: var(--a-padding-x10);
+        border-radius: var(--border-radius-x8);
+      }
+    }
+  }
+
+  &__contact {
+    display: flex;
+    align-items: center;
+    gap: to-rem(8);
+
+    img {
+      width: to-rem(20);
+      height: to-rem(20);
+    }
+  }
+
+  &__phone {
+    span {
+      &::after {
+        content: ',';
+      }
+
+      &:last-of-type {
+        &::after {
+          content: '';
+        }
+      }
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: to-rem(12);
+    margin-bottom: var(--a-margin-x10);
+
+    a {
+      img {
+        width: to-rem(32);
+        height: to-rem(32);
+        padding: var(--a-padding-x2);
+        background-color: var(--color-orange);
+        border-radius: 50%;
+      }
+    }
+  }
+
+  &__map {
+    height: to-rem(400);
+  }
+}

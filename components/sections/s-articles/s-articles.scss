@@ -1,0 +1,19 @@
+.s-articles {
+  .s-articles__box {
+    display: grid;
+    justify-content: flex-start;
+    align-items: flex-start;
+    grid-template-columns: repeat(1, 1fr);
+    gap: to-rem(32);
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: to-rem(16);
+    }
+    @media (min-width: 992px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media (min-width: 1200px) {
+      gap: to-rem(20);
+    }
+  }
+}

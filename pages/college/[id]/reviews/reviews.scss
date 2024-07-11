@@ -1,0 +1,11 @@
+.reviews {
+  .title-h3 {
+    margin-bottom: var(--a-margin-x8);
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: to-rem(20);
+  }
+}

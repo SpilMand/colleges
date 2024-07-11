@@ -1,0 +1,29 @@
+.a-breadcrumbs {
+  margin: var(--a-margin-x6) 0;
+  color: var(--color-violet-60);
+
+  &__list {
+    display: flex;
+  }
+
+  &__item {
+    cursor: pointer;
+    &::after {
+      content: '/';
+      margin: 0 to-rem(4);
+    }
+
+    &:last-of-type {
+      color: var(--color-violet-80);
+      cursor: default;
+
+      &::first-letter {
+        text-transform: uppercase;
+      }
+
+      &::after {
+        content: '';
+      }
+    }
+  }
+}

@@ -1,0 +1,106 @@
+.a-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  min-width: unset;
+
+  // max-width: to-rem(328);
+  margin: to-rem(40) auto;
+
+  @media (min-width: 450px) {
+    gap: to-rem(8);
+  }
+
+  @media (min-width: 768px) {
+    min-width: to-rem(436);
+    max-width: to-rem(436);
+    gap: to-rem(12);
+  }
+
+  .arrow {
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: center;
+    align-items: center;
+    width: to-rem(36);
+    height: to-rem(36);
+    border: to-rem(1) solid var(--color-violet-60);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    @media (min-width: 1500px) {
+      width: to-rem(44);
+      height: to-rem(44);
+    }
+
+    &:hover {
+      border: to-rem(1) solid var(--color-violet-80);
+
+      path {
+        fill: var(--color-violet-100);
+      }
+    }
+
+    &.disabled {
+      background: var(--color-violet-5);
+      border: var(--color-violet-5);
+      cursor: default;
+
+      path {
+        fill: var(--color-gray);
+      }
+    }
+  }
+
+  &__pages {
+    display: flex;
+
+    // min-width: to-rem(248);
+    justify-content: space-between;
+    align-items: center;
+
+    @media (min-width: 450px) {
+      gap: to-rem(8);
+    }
+
+    @media (min-width: 768px) {
+      gap: to-rem(12);
+    }
+
+    &-num {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: to-rem(36);
+      height: to-rem(36);
+      border: to-rem(1) solid var(--color-violet-60);
+      border-radius: 50%;
+      line-height: 130%;
+      cursor: pointer;
+      transition: border ease 0.3s;
+
+      // transition: all 0.3s;
+      @media (min-width: 1500px) {
+        width: to-rem(44);
+        height: to-rem(44);
+      }
+
+      &:hover {
+        border: to-rem(1) solid var(--color-violet-80);
+      }
+
+      &.active {
+        color: var(--color-white);
+        background: var(--color-violet-80);
+        border: none;
+        cursor: default;
+      }
+    }
+
+    &-points {
+      padding: 0 to-rem(12);
+    }
+  }
+}

@@ -1,0 +1,36 @@
+.s-other-branches {
+  .swiper-slide {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
+
+  .swiper {
+    overflow-x: hidden;
+  }
+
+  &__box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: to-rem(35);
+
+    .a-button {
+      margin-top: var(--a-margin-x10);
+    }
+  }
+
+  &__slide {
+    display: flex;
+    align-items: center;
+    padding: to-rem(16) to-rem(20);
+    background-color: var(--color-gray-light);
+    border-radius: var(--border-radius-x4);
+    gap: to-rem(12);
+    @media (min-width: 1280px) {
+      padding: var(--a-padding-x6);
+      border-radius: var(--border-radius-x6);
+    }
+  }
+}

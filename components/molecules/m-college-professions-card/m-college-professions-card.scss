@@ -1,0 +1,69 @@
+.m-college-professions-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: to-rem(24);
+  background-color: var(--color-gray-light);
+  border-radius: var(--border-radius-x6);
+  transition: all 0.3s;
+
+  &:hover {
+    background-color: var(--color-orange);
+
+    span,
+    h4 {
+      color: var(--color-white) !important;
+    }
+
+    .m-college-professions-card__recomendation span {
+      color: var(--color-violet-100) !important;
+      background-color: var(--color-white);
+    }
+  }
+
+  // *{transition: all 2.3s;}
+  &__recomendation {
+    height: to-rem(32);
+
+    span {
+      display: inline-block;
+      padding: var(--a-padding-x1) var(--a-padding-x3);
+      color: var(--color-violet-100);
+      background-color: var(--color-violet-40);
+      border-radius: to-rem(20);
+      font-size: to-rem(12);
+      transition: all 0.3s;
+    }
+  }
+
+  &__title {
+    margin-bottom: var(--a-margin-x12);
+    font-size: to-rem(24);
+    line-height: to-rem(28.8);
+    transition: all 0.3s;
+
+    &::first-letter {
+      text-transform: uppercase;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+    gap: to-rem(8);
+  }
+
+  li {
+    display: flex;
+    justify-content: space-between;
+
+    span {
+      transition: all 0.3s;
+
+      &:first-of-type {
+        color: var(--color-gray);
+      }
+    }
+  }
+}

@@ -1,0 +1,38 @@
+.s-ask {
+  .a-select {
+    max-width: to-rem(415);
+    margin-bottom: var(--a-margin-x5);
+  }
+
+  &__textarea {
+    position: relative;
+    max-width: to-rem(995);
+
+    textarea {
+      resize: none;
+      width: 100%;
+      min-height: to-rem(157);
+      padding: var(--a-padding-x4);
+      border-color: var(--color-violet-10);
+      border-radius: var(--border-radius-x4);
+      @media (min-width: 1280px) {
+        min-height: to-rem(226);
+      }
+
+      &:focus {
+        border-color: var(--color-violet-80);
+      }
+    }
+
+    img {
+      position: absolute;
+      right: to-rem(8);
+      bottom: to-rem(12);
+    }
+  }
+
+  &__s-count {
+    display: block;
+    margin: var(--a-margin-x2) 0 var(--a-margin-x8);
+  }
+}

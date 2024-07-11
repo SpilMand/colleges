@@ -1,0 +1,38 @@
+.m-foru-faq {
+  display: flex;
+  flex-direction: column;
+  padding: var(--a-padding-x8) var(--a-padding-x4);
+  background-color: var(--color-violet-5);
+  border-radius: var(--border-radius-x8);
+  cursor: pointer;
+  gap: to-rem(16);
+  @media (min-width: 1200px) {
+    gap: to-rem(20);
+    padding: var(--a-padding-x8);
+  }
+
+  .m-foru-faq__title {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: to-rem(8);
+
+    span {
+      margin-top: to-rem(-4);
+    }
+  }
+
+  p {
+    padding-right: 5%;
+  }
+
+  svg {
+    transition: all ease 0.3s;
+  }
+
+  &.active {
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+}

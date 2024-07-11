@@ -1,0 +1,26 @@
+.m-parents-list {
+  display: flex;
+  align-items: flex-start;
+  gap: to-rem(8);
+
+  @media (min-width: 768px) {
+    align-items: center;
+    font-size: to-rem(12);
+  }
+
+  .m-parents-list__img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: to-rem(24);
+    height: to-rem(24);
+    padding: var(--a-padding-x1);
+    background-color: var(--color-violet-40);
+    border-radius: var(--border-radius-x1);
+    @media (min-width: 768px) {
+      width: to-rem(40);
+      height: to-rem(40);
+      padding: 0;
+    }
+  }
+}

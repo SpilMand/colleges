@@ -1,0 +1,44 @@
+.s-applicants {
+  .s-applicants__faq {
+    display: flex;
+    align-items: flex-start;
+    gap: to-rem(12);
+    flex-flow: column wrap;
+
+    @media (min-width: 576px) {
+      gap: to-rem(16);
+      flex-flow: row wrap;
+    }
+
+    @media (min-width: 1200px) {
+      gap: to-rem(20);
+    }
+  }
+
+  .s-applicants__link {
+    width: 100%;
+
+    @media (min-width: 576px) {
+      width: auto;
+    }
+  }
+
+  .s-applicants__button {
+    width: 100%;
+    height: auto;
+    padding: var(--a-padding-x3) var(--a-padding-x6);
+    text-align: left;
+
+    @media (min-width: 576px) {
+      width: auto;
+      gap: to-rem(80);
+    }
+  }
+
+  .s-applicants-main__list {
+    .m-main-item {
+      color: var(--color-violet-100);
+      background: var(--color-violet-20);
+    }
+  }
+}

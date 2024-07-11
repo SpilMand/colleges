@@ -1,0 +1,15 @@
+.s-reviews {
+  .s-reviews__box {
+    position: relative;
+  }
+
+  .s-reviews__wrapper {
+    padding-right: var(--a-padding-x10);
+  }
+
+  .swiper-slide {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
+}

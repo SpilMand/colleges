@@ -1,0 +1,29 @@
+.m-form-resource {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: to-rem(304);
+  margin: 0 auto;
+  gap: to-rem(16);
+
+  @media (min-width: 992px) {
+    max-width: to-rem(312);
+  }
+
+  .m-form-resource__link {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    justify-content: center;
+    align-items: center;
+    width: to-rem(48);
+    height: to-rem(48);
+    border: to-rem(1) solid var(--color-violet-5);
+    border-radius: 100%;
+
+    img {
+      width: to-rem(20);
+      height: to-rem(20);
+    }
+  }
+}

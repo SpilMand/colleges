@@ -1,0 +1,73 @@
+.s-students-count {
+  .title-h3 {
+    margin-bottom: var(--a-margin-x10);
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--a-padding-x4);
+    background-color: var(--color-gray-light);
+    border-radius: var(--border-radius-x8);
+
+    // justify-content: space-between;
+    gap: to-rem(32);
+    @media (min-width: 980px) {
+      flex-direction: row;
+      padding: var(--a-padding-x12) var(--a-padding-x20);
+    }
+  }
+
+  &__diagram {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: to-rem(245);
+    height: to-rem(245);
+    background: url('../img/college/diagram.svg') no-repeat 0 / 100%;
+  }
+
+  &__info {
+    margin: 0 auto;
+
+    li {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--a-padding-x4);
+      padding-left: to-rem(28);
+      border-bottom: to-rem(1) solid var(--color-violet-10);
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        width: to-rem(16);
+        height: to-rem(16);
+        background-color: var(--color-violet-80);
+        border-radius: 50%;
+      }
+
+      &:first-of-type {
+        &::before {
+          background-color: var(--color-green);
+        }
+      }
+
+      &:last-of-type {
+        border: none;
+
+        &::before {
+          background-color: var(--color-orange);
+        }
+      }
+
+      span:first-of-type {
+        width: 70%;
+      }
+    }
+  }
+}

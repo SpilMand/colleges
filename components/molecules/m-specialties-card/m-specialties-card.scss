@@ -1,0 +1,147 @@
+.m-specialties-card {
+  padding: var(--a-padding-x6) var(--a-padding-x4);
+  background-color: var(--color-gray-light);
+  border-radius: var(--border-radius-x6);
+  @media (min-width: 768px) {
+    padding: var(--a-padding-x6) var(--a-padding-x5);
+  }
+  @media (min-width: 1280px) {
+    padding: var(--a-padding-x8);
+    border-radius: var(--border-radius-x8);
+  }
+
+  a {
+    &:hover {
+      color: var(--color-violet-80);
+    }
+  }
+
+  &.alternative {
+    .m-specialties-card__list-item {
+      @media (min-width: 768px) {
+        grid-template-columns: 5fr repeat(6, minmax(0, 1fr));
+      }
+    }
+  }
+
+  &__inner {
+    position: relative;
+    padding-top: var(--a-padding-x6);
+    @media (min-width: 768px) {
+      padding: 0;
+    }
+
+    .title-h4 {
+      max-width: 80%;
+    }
+  }
+
+  &__info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    @media (min-width: 768px) {
+      right: 0;
+      left: unset;
+    }
+  }
+
+  &__subtitle {
+    @media (min-width: 576px) {
+      max-width: 70%;
+    }
+  }
+
+  &__wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin: var(--a-margin-x2) 0 0;
+    gap: to-rem(24);
+    @media (min-width: 992px) {
+      flex-direction: row;
+      gap: to-rem(20);
+    }
+
+    button {
+      flex: 0 0 auto;
+      @media (min-width: 992px) {
+        max-width: to-rem(282);
+      }
+
+      @media (min-width: 1200px) {
+        max-width: to-rem(390);
+      }
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    margin-top: var(--a-margin-x6);
+    text-align: center;
+    gap: to-rem(8);
+
+    &-item {
+      display: flex;
+      flex-direction: column;
+      padding: var(--a-padding-x3) var(--a-padding-x4);
+      background-color: var(--color-white);
+      border-radius: var(--border-radius-x4);
+      gap: to-rem(8);
+      @media (min-width: 768px) {
+        display: grid;
+        grid-template-columns: 5fr repeat(5, minmax(0, 1fr));
+        gap: 0;
+      }
+
+      &.head {
+        padding-bottom: 0;
+        background-color: unset;
+
+        .m-specialties-card__list-param {
+          border: none;
+        }
+      }
+    }
+
+    &-param {
+      display: flex;
+      // justify-content: space-between;
+      align-items: center;
+      @media (min-width: 768px) {
+        justify-content: center;
+        padding: 0 var(--a-padding-x2);
+        border-right: to-rem(1) solid var(--color-violet-10);
+      }
+
+      &.college-title {
+        justify-content: flex-start;
+        text-align: start;
+        gap: to-rem(8);
+
+        img {
+          width: to-rem(40);
+          height: to-rem(40);
+          padding: var(--a-padding-x1);
+        }
+      }
+
+      &:last-of-type {
+        padding-right: 0;
+        border: none;
+      }
+      &-label {
+        margin-right: auto;
+      }
+    }
+  }
+
+  &__more {
+    display: block;
+    width: fit-content;
+    margin: var(--a-margin-x6) auto 0;
+    cursor: pointer;
+  }
+}

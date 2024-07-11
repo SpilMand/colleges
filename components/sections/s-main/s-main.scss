@@ -1,0 +1,57 @@
+.s-main {
+  margin-bottom: var(--a-margin-x16);
+  background-color: var(--color-violet-20);
+  border-radius: 0 0 to-rem(24) to-rem(24);
+
+  @media (min-width: 768px) {
+    margin-bottom: var(--a-margin-x17);
+    border-radius: 0 0 to-rem(48) to-rem(48);
+  }
+
+  @media (min-width: 1200px) {
+    margin-bottom: var(--a-margin-x30);
+    border-radius: 0 0 to-rem(80) to-rem(80);
+  }
+
+  @media (min-width: 1200px) {
+    gap: to-rem(40);
+  }
+
+  .s-main__wrapper {
+    max-width: to-rem(1870);
+    margin: 0 auto;
+    padding: var(--a-padding-x16) 0 var(--a-padding-x4);
+    background-image: url('../img/main/fon-mob.svg');
+    background-repeat: no-repeat;
+    background-position: right top;
+    @media (min-width: 768px) {
+      padding: var(--a-padding-x18) 0 var(--a-padding-x10);
+      background-image: url('../img/main/fon-tab.svg');
+    }
+    @media (min-width: 1200px) {
+      padding: var(--a-padding-x20) 0;
+      background-image: url('../img/main/fon.svg');
+    }
+  }
+
+  .s-main__box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: to-rem(1345);
+    margin: 0 auto;
+    text-align: center;
+    gap: to-rem(28);
+    @media (min-width: 768px) {
+      gap: to-rem(36);
+    }
+  }
+
+  .s-main__subtitle {
+    max-width: to-rem(420);
+    @media (min-width: 1200px) {
+      max-width: to-rem(665);
+    }
+  }
+}

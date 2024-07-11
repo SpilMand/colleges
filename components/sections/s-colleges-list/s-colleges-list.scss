@@ -1,0 +1,15 @@
+.s-colleges-list {
+  .title-h4 {
+    margin-bottom: var(--a-margin-x10);
+  }
+
+  &__cards {
+    display: flex;
+    flex-direction: column;
+    gap: to-rem(20);
+
+    .s-quiz {
+      order: 4;
+    }
+  }
+}

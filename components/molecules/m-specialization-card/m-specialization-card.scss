@@ -1,0 +1,93 @@
+.m-specialization-card {
+  padding: var(--a-padding-x4);
+  background-color: var(--color-gray-light);
+  border-radius: var(--border-radius-x6);
+  @media (min-width: 980px) {
+    padding: var(--a-padding-x8);
+  }
+
+  .a-button {
+    width: 100%;
+    margin-top: to-rem(20);
+    @media (min-width: 980px) {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: unset;
+      min-width: to-rem(220);
+      margin: 0;
+    }
+  }
+
+  &__inner {
+    position: relative;
+  }
+
+  &__head {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin-bottom: var(--a-margin-x8);
+    gap: to-rem(8);
+  }
+
+  &__accr-info {
+    display: flex;
+    gap: to-rem(8);
+  }
+
+  &__content {
+    // display: flex;
+    padding: var(--a-padding-x1) var(--a-padding-x4);
+    background-color: var(--color-white);
+    border-radius: var(--border-radius-x4);
+    @media (min-width: 980px) {
+      display: grid;
+      padding: unset;
+      background-color: unset;
+      grid-template-columns: repeat(2, 1fr);
+      gap: to-rem(20);
+    }
+  }
+
+  &__column {
+    @media (min-width: 980px) {
+      display: flex;
+      flex-direction: column;
+      padding: to-rem(16) to-rem(20);
+      background-color: var(--color-white);
+      border-radius: var(--border-radius-x4);
+      gap: to-rem(12);
+    }
+
+    &:last-of-type {
+      .m-specialization-card__item {
+        &:last-of-type {
+          border: none;
+        }
+      }
+    }
+  }
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    padding: to-rem(12) 0;
+    border-bottom: to-rem(1) solid var(--color-violet-10);
+    @media (min-width: 980px) {
+      padding: 0;
+      border: none;
+    }
+
+    .f-font-700 {
+      text-align: end;
+    }
+  }
+
+  &__points {
+    @media (min-width: 980px) {
+      flex: 1;
+      background: url('/img/college/points.svg') repeat-x 0 100%;
+    }
+  }
+}

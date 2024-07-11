@@ -1,0 +1,33 @@
+.s-quote {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  padding: var(--a-padding-x9) var(--a-padding-x12);
+  background-color: var(--color-violet-5);
+  border-radius: var(--border-radius-x6);
+  gap: to-rem(10);
+  @media (min-width: 1280px) {
+    padding: var(--a-padding-x12);
+  }
+
+  p {
+    z-index: 1;
+  }
+
+  &__img {
+    position: absolute;
+    top: to-rem(20);
+    left: to-rem(20);
+  }
+
+  &__bg {
+    position: absolute;
+    top: to-rem(-50);
+    right: to-rem(-100);
+    opacity: 0.3;
+    @media (min-width: 768px) {
+      right: 0;
+    }
+  }
+}

@@ -1,0 +1,34 @@
+.s-colleges {
+  position: relative;
+
+  .s-colleges__box {
+    position: relative;
+  }
+
+  .swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: to-rem(120) !important;
+
+    @media (min-width: 1200px) {
+      height: to-rem(138) !important;
+    }
+  }
+
+  .swiper-wrapper {
+    height: auto;
+
+    @media (min-width: 576px) {
+      height: to-rem(260);
+    }
+
+    @media (min-width: 1200px) {
+      height: to-rem(296);
+    }
+  }
+
+  &__title {
+    margin-bottom: var(--a-padding-x10);
+  }
+}

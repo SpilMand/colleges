@@ -1,0 +1,23 @@
+.s-feedback {
+  position: sticky;
+  z-index: var(--z-index-menu-directions);
+  top: to-rem(80);
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  margin-bottom: to-rem(124);
+  gap: to-rem(16);
+
+  a button {
+    width: 100%;
+  }
+
+  &.mobile {
+    position: static;
+    margin-bottom: 0;
+    margin-left: auto;
+    @media (min-width: 768px) {
+      max-width: to-rem(400);
+    }
+  }
+}

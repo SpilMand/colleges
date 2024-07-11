@@ -1,0 +1,139 @@
+.m-quiz-step {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding: var(--a-padding-x8) var(--a-padding-x4);
+  background: url('../img/quiz/step.svg') no-repeat left bottom;
+  gap: to-rem(20);
+
+  @media (min-width: 576px) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+    background: none;
+  }
+
+  @media (min-width: 1200px) {
+    gap: to-rem(100);
+  }
+
+  .m-quiz-step__content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: to-rem(442);
+    gap: to-rem(24);
+
+    @media (min-width: 1200px) {
+      max-width: to-rem(600);
+      gap: to-rem(32);
+    }
+  }
+
+  .m-quiz-step__back {
+    display: flex;
+    align-items: center;
+    gap: to-rem(8);
+    cursor: pointer;
+    transition: all ease 0.3s;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+
+  .m-quiz-step__box {
+    display: grid;
+    width: 100%;
+    max-width: 100%;
+    grid-template-columns: repeat(1, 1fr);
+    gap: to-rem(16);
+
+    @media (min-width: 768px) {
+      max-width: to-rem(442);
+    }
+
+    @media (min-width: 1200px) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: to-rem(20);
+      max-width: to-rem(570);
+    }
+
+    @media (min-width: 1500px) {
+      max-width: to-rem(628);
+      margin-right: 5%;
+    }
+  }
+
+  .m-quiz-step__item {
+    display: block;
+    width: 100%;
+    padding: var(--a-padding-x3) var(--a-padding-x4);
+    background: var(--color-white);
+    border-radius: var(--border-radius-x3);
+    cursor: pointer;
+
+    @media (min-width: 576px) {
+      padding: var(--a-padding-x4) var(--a-padding-x5);
+    }
+
+    &:hover {
+      span {
+        &::before {
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+    }
+
+    input {
+      display: none;
+
+      &:checked {
+        & + span {
+          &::before {
+            visibility: visible;
+            opacity: 1;
+          }
+        }
+      }
+    }
+
+    span {
+      position: relative;
+      display: flex;
+      align-items: center;
+      padding-left: var(--a-padding-x9);
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        display: block;
+        width: to-rem(24);
+        height: to-rem(24);
+        border: solid to-rem(1) var(--color-gray);
+        border-radius: 100%;
+        transform: translate(0, -50%);
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        visibility: hidden;
+        width: to-rem(12);
+        height: to-rem(12);
+        background-color: var(--color-violet-100);
+        border-radius: 100%;
+        opacity: 0;
+        transition: all ease 0.3s;
+        transform: translate(50%, -50%);
+      }
+    }
+  }
+}

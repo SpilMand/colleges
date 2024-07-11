@@ -1,0 +1,74 @@
+.m-colleges-card {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 0 var(--a-padding-x4);
+  background: var(--color-gray-light);
+  border-radius: var(--border-radius-x8);
+  text-align: left;
+  transition: all ease 0.3s;
+  gap: to-rem(12);
+
+  &.last {
+    justify-content: center;
+    color: var(--color-violet-100);
+    background-color: unset;
+    border: to-rem(1) solid var(--color-violet-10);
+  }
+
+  @media (min-width: 1200px) {
+    padding: 0 var(--a-padding-x6);
+    gap: to-rem(16);
+  }
+
+  &:hover {
+    background: var(--color-orange);
+
+    .m-colleges-card__text {
+      color: var(--color-white);
+    }
+  }
+
+  .m-colleges-card__img {
+    display: flex;
+    overflow: hidden;
+    flex: 0 0 auto;
+    justify-content: center;
+    align-items: center;
+    width: to-rem(72);
+    height: to-rem(72);
+    background-color: var(--color-white);
+    border-radius: 100%;
+
+    img {
+      width: to-rem(48);
+      height: to-rem(48);
+    }
+
+    @media (min-width: 1200px) {
+      width: to-rem(80);
+      height: to-rem(80);
+
+      img {
+        width: to-rem(56);
+        height: to-rem(56);
+      }
+    }
+  }
+
+  .m-colleges-card__text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: to-rem(95);
+    transition: all ease 0.3s;
+
+    p {
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-line-clamp: 5;
+      -webkit-box-orient: vertical;
+    }
+  }
+}

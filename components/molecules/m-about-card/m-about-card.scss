@@ -1,0 +1,81 @@
+.m-about-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-gray-light);
+  border-radius: var(--border-radius-x6);
+  @media (min-width: 1200px) {
+    border-radius: var(--border-radius-x8);
+  }
+
+  .m-about-card__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--a-padding-x4);
+    background: var(--color-violet-5);
+    border-radius: var(--border-radius-x6) var(--border-radius-x6) 0 0;
+
+    @media (min-width: 992px) {
+      padding: var(--a-padding-x5) var(--a-padding-x6);
+    }
+
+    @media (min-width: 1200px) {
+      padding: var(--a-padding-x6) var(--a-padding-x8);
+    }
+  }
+
+  .m-about-card__item {
+    &::first-letter {
+      text-transform: uppercase;
+    }
+  }
+
+  .m-about-card__icon {
+    flex: 0 0 auto;
+    max-width: to-rem(24);
+    @media (min-width: 992px) {
+      max-width: 100%;
+    }
+  }
+
+  .m-about-card__wrapper {
+    position: relative;
+    padding: var(--a-padding-x4) var(--a-padding-x4) var(--a-padding-x6) var(--a-padding-x4);
+    @media (min-width: 1200px) {
+      padding: var(--a-padding-x6) var(--a-padding-x8) var(--a-padding-x8) var(--a-padding-x8);
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 88%;
+      height: to-rem(100);
+      background: linear-gradient(180deg, rgb(246 246 246 / 20%), rgb(246 246 246) 100%);
+      pointer-events: none;
+    }
+  }
+
+  .m-about-card__content {
+    position: relative;
+    display: flex;
+    overflow: auto;
+    flex-direction: column;
+    height: to-rem(140);
+    gap: to-rem(13);
+    padding-right: var(--a-padding-x2);
+    @media (min-width: 1200px) {
+      height: to-rem(160);
+      gap: to-rem(16);
+    }
+  }
+
+  .m-about-card__button {
+    margin-top: auto;
+    padding: 0 var(--a-padding-x4) var(--a-padding-x4) var(--a-padding-x4);
+    @media (min-width: 1200px) {
+      padding: 0 var(--a-padding-x8) var(--a-padding-x10) var(--a-padding-x8);
+    }
+  }
+}

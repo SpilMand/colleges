@@ -1,0 +1,117 @@
+.s-main-about {
+  .s-main-about__wrapper {
+    margin-bottom: var(--a-margin-x8);
+    background-color: var(--color-violet-80);
+
+    @media (min-width: 1200px) {
+      margin-bottom: var(--a-margin-x10);
+    }
+  }
+
+  .s-main-about__inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: to-rem(1870);
+    height: to-rem(110);
+    margin: 0 auto;
+    background-image: url('../img/about-page/fon-mob.svg');
+    background-repeat: no-repeat;
+    background-position: right bottom;
+
+    @media (min-width: 768px) {
+      height: to-rem(228);
+      background-image: url('../img/about-page/fon-tab.svg');
+    }
+
+    @media (min-width: 1200px) {
+      height: to-rem(275);
+      background-image: url('../img/about-page/fon.svg');
+    }
+  }
+
+  .s-main-about__desc {
+    display: block;
+    margin-bottom: var(--a-margin-x10);
+
+    @media (min-width: 768px) {
+      margin-bottom: var(--a-margin-x16);
+    }
+
+    @media (min-width: 1200px) {
+      margin-bottom: var(--a-margin-x25);
+    }
+  }
+
+  .s-main-about__box {
+    display: flex;
+    gap: to-rem(20);
+    flex-direction: column;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+    }
+
+    .s-main-about__box-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 100%;
+      padding: var(--a-padding-x5);
+      background-color: var(--color-violet-80);
+      border-radius: var(--border-radius-x6);
+      transition: all ease 0.3s;
+      gap: to-rem(32);
+
+      @media (min-width: 768px) {
+        flex-direction: row;
+        align-items: center;
+        padding: var(--a-padding-x4) var(--a-padding-x8);
+      }
+
+      &:hover {
+        background-color: var(--color-violet-100);
+      }
+
+      .s-main-about__box-button {
+        color: var(--color-white);
+        background-color: var(--color-orange);
+
+        @media (min-width: 768px) {
+          flex: 0 0 auto;
+          justify-content: center;
+          width: to-rem(40);
+          height: to-rem(40);
+          padding: 0;
+          border-radius: 100%;
+
+          span {
+            display: none;
+          }
+        }
+
+        @media (min-width: 1200px) {
+          width: to-rem(64);
+          height: to-rem(64);
+
+          svg {
+            width: 26px;
+            height: 22px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.s-main-about-box {
+  margin-bottom: var(--a-margin-x8);
+
+  @media (min-width: 768px) {
+    max-width: 80%;
+  }
+
+  .title-about {
+    margin-bottom: var(--a-margin-x4);
+  }
+}

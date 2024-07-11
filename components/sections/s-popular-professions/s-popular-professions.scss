@@ -1,0 +1,16 @@
+.s-popular-professions {
+  .swiper-slide {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
+
+  .swiper {
+    overflow-x: hidden;
+  }
+
+  &__box {
+    position: relative;
+    margin-top: to-rem(35);
+  }
+}

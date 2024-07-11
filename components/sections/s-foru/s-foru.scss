@@ -1,0 +1,11 @@
+.s-foru {
+  .s-foru__box {
+    display: flex;
+    flex-direction: column;
+    gap: to-rem(16);
+
+    @media (min-width: 1200px) {
+      font-size: to-rem(24);
+    }
+  }
+}

@@ -1,0 +1,51 @@
+.s-advantages {
+  position: relative;
+
+  .title-h3 {
+    margin-bottom: var(--a-margin-x6);
+  }
+
+  &__content {
+    position: relative;
+  }
+
+  &__list {
+    overflow: hidden;
+    max-height: to-rem(130);
+    line-height: 130%;
+
+    &.show {
+      max-height: unset;
+    }
+
+    li {
+      margin-left: var(--a-padding-x4);
+      list-style-type: disc;
+    }
+  }
+
+  &__gradient {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: to-rem(77);
+    background: linear-gradient(180deg, #f6f6f633 0%, #fff 100%);
+  }
+
+  &__more {
+    position: absolute;
+    left: 0;
+    bottom: to-rem(38);
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    margin-top: var(--a-margin-x6);
+    color: var(--color-violet-100);
+    cursor: pointer;
+    gap: to-rem(8);
+    @media (min-width: 1200px) {
+      bottom: to-rem(70);
+    }
+  }
+}

@@ -1,0 +1,12 @@
+.m-menu-footer {
+  .m-menu-footer__list {
+    display: flex;
+    flex-direction: column;
+    gap: to-rem(16);
+    margin-bottom: to-rem(68);
+
+    @media (min-width: 768px) {
+      margin-bottom: 0;
+    }
+  }
+}

@@ -1,0 +1,18 @@
+.a-answer {
+  padding-left: to-rem(12);
+  border-left: to-rem(1) solid var(--color-violet-10);
+
+  @media (min-width: 1280px) {
+    padding-left: to-rem(20);
+  }
+
+  &__info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--a-margin-x2);
+
+    @media (min-width: 1280px) {
+      margin-bottom: var(--a-margin-x4);
+    }
+  }
+}

@@ -1,0 +1,18 @@
+@use 'sass:math';
+
+@function to-rem($px) {
+  @return math.div($px, 16) + rem;
+}
+
+$px: px;
+@mixin media($point) {
+  @media (max-width: $point + $px) {
+    @content;
+  }
+}
+
+@mixin media-min($point) {
+  @media (min-width: $point + $px) {
+    @content;
+  }
+}

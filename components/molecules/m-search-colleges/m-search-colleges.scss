@@ -1,0 +1,21 @@
+.m-search-colleges {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: to-rem(16);
+  margin-top: var(--a-margin-x10);
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: var(--a-margin-x16);
+  }
+
+  @media (min-width: 1200px) {
+    gap: to-rem(20);
+  }
+
+  .m-search-colleges__button {
+    height: to-rem(48);
+    @media (min-width: 1200px) {
+      height: to-rem(64);
+    }
+  }
+}

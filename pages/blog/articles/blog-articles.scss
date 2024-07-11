@@ -1,0 +1,94 @@
+.blog-articles {
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    gap: to-rem(16);
+    @media (min-width: 768px) {
+      flex-direction: row;
+    }
+    @media (min-width: 1280px) {
+      gap: to-rem(20);
+    }
+
+    ul {
+      display: grid;
+      overflow: hidden;
+      align-items: center;
+      border: to-rem(1) solid var(--color-violet-80);
+      border-radius: var(--border-radius-x3);
+      grid-template-columns: repeat(3, 1fr);
+      @media (min-width: 768px) and (max-width: 1280px) {
+        width: 40%;
+      }
+    }
+
+    &-item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: var(--a-padding-x2) var(--a-padding-x4);
+      border-right: to-rem(1) solid var(--color-violet-80);
+      text-align: center;
+
+      &:last-of-type {
+        border: none;
+      }
+      @media (min-width: 768px) {
+        height: 100%;
+      }
+      @media (min-width: 1280px) {
+        padding: var(--a-padding-x3) var(--a-padding-x19);
+      }
+
+      &.router-link-active {
+        color: var(--color-white);
+        background-color: var(--color-violet-80);
+      }
+    }
+
+    .a-search {
+      flex: 1;
+    }
+  }
+
+  &__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: to-rem(8);
+    margin-bottom: var(--a-margin-x6);
+
+    &-tag {
+      padding: var(--a-padding-x2) var(--a-padding-x5);
+      border: to-rem(1) solid var(--color-violet-60);
+      border-radius: to-rem(100);
+      cursor: pointer;
+      transition: all 0.3s;
+      @media (min-width: 1280px) {
+        padding: var(--a-padding-x2) var(--a-padding-x6);
+      }
+
+      &.active {
+        color: var(--color-white);
+        background-color: var(--color-orange);
+        border-color: var(--color-orange);
+      }
+    }
+  }
+
+  &__articles {
+    display: grid;
+    margin-top: var(--a-margin-x5);
+    grid-template-columns: 1fr;
+    row-gap: to-rem(24);
+    @media (min-width: 768px) {
+      row-gap: to-rem(32);
+      column-gap: to-rem(16);
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media (min-width: 1280px) {
+      row-gap: to-rem(40);
+      column-gap: to-rem(20);
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+}

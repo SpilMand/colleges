@@ -1,0 +1,19 @@
+.questions {
+  .title-h3 {
+    margin-bottom: var(--a-margin-x8);
+  }
+
+  .a-pagination {
+    margin-top: 0;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: to-rem(32);
+    max-width: to-rem(995);
+    @media (min-width: 768px) {
+      // width: fit-content;
+    }
+  }
+}

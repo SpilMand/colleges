@@ -1,0 +1,34 @@
+.professions {
+  .title-h3 {
+    margin-bottom: var(--a-margin-x10);
+  }
+
+  .s-feedback {
+    @media (min-width: 980px) {
+      display: none;
+    }
+  }
+
+  &__filter {
+    display: flex;
+    flex-direction: column;
+    gap: to-rem(20);
+    margin-bottom: to-rem(20);
+    @media (min-width: 980px) {
+      flex-direction: row;
+
+      .a-select {
+        max-width: to-rem(270);
+      }
+    }
+  }
+
+  &__cards {
+    display: grid;
+    grid-auto-rows: 1fr;
+    gap: to-rem(20);
+    @media (min-width: 980px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}

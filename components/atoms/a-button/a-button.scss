@@ -1,0 +1,133 @@
+.a-button {
+  display: flex;
+
+  // flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: to-rem(8);
+  width: auto;
+  padding: 0 var(--a-padding-x6);
+  border-width: to-rem(1);
+  border-style: solid;
+  border-radius: to-rem(50);
+  font-weight: 500;
+  transition: all 0.3s ease;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &__img {
+    display: flex;
+
+    &.active {
+      transform: rotate(180deg);
+    }
+  }
+
+  &--center {
+    justify-content: center;
+  }
+
+  &--small {
+    height: to-rem(32);
+  }
+
+  &--medium {
+    height: to-rem(44);
+  }
+
+  &--large {
+    height: to-rem(50);
+  }
+
+  &--extra-large {
+    height: to-rem(52);
+  }
+
+  &--violet-5 {
+    color: var(--color-violet-100);
+    background-color: var(--color-violet-5);
+    border-color: var(--color-violet-5);
+
+    &:hover {
+      color: var(--color-white);
+      background-color: var(--color-orange);
+      border-color: var(--color-orange);
+
+      path {
+        fill: var(--color-white);
+      }
+    }
+  }
+
+  &--white {
+    color: var(--color-violet-100);
+    background-color: var(--color-white);
+    border: none;
+
+    &:hover {
+      color: var(--color-white);
+      background-color: var(--color-orange);
+
+      path {
+        fill: var(--color-white);
+      }
+    }
+  }
+
+  &--orange {
+    color: var(--color-white);
+    background-color: var(--color-orange);
+    border-color: var(--color-orange);
+
+    &:hover {
+      background-color: var(--color-orange-hover);
+    }
+  }
+
+  &--outline {
+    color: var(--color-violet-100);
+    background-color: unset;
+    border-color: var(--color-violet-80);
+
+    &:hover {
+      color: var(--color-white);
+      background-color: var(--color-orange);
+      border-color: var(--color-orange);
+
+      path {
+        fill: var(--color-white);
+      }
+    }
+  }
+
+  &--outline-orange {
+    color: var(--color-orange);
+    background-color: unset;
+    border-color: var(--color-orange);
+
+    &:hover {
+      color: var(--color-white);
+      background-color: var(--color-orange);
+      border-color: var(--color-orange);
+
+      path {
+        fill: var(--color-white);
+      }
+    }
+  }
+
+  &--disabled {
+    color: var(--color-gray);
+    background-color: var(--color-gray-light);
+    border-color: var(--color-gray-light);
+
+    &:hover {
+      color: var(--color-gray);
+      background-color: var(--color-gray-light);
+      border-color: var(--color-gray-light);
+      cursor: default;
+    }
+  }
+}

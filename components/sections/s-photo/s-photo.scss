@@ -1,0 +1,23 @@
+.s-photo {
+  .swiper-slide {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
+
+  .swiper {
+    overflow-x: hidden;
+  }
+
+  &__box {
+    position: relative;
+    margin-top: to-rem(35);
+  }
+
+  &__slide {
+    border-radius: to-rem(20);
+    @media (min-width: 768px) {
+      border-radius: var(--border-radius-x8);
+    }
+  }
+}

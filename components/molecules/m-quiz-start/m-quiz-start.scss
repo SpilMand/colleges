@@ -1,0 +1,121 @@
+.m-quiz-start {
+  width: 100%;
+
+  .m-quiz-start__box {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: var(--a-padding-x4);
+    gap: to-rem(24);
+
+    @media (min-width: 576px) {
+      padding: 0;
+    }
+  }
+
+  .m-quiz-start__title {
+    margin-bottom: 0;
+  }
+
+  .m-quiz-start__subtitle {
+    margin-bottom: var(--a-margin-x2);
+  }
+
+  .m-quiz-start__text {
+    max-width: to-rem(350);
+  }
+
+  .m-quiz-start__button {
+    width: 100%;
+    max-width: to-rem(195);
+    margin-top: var(--a-margin-x3);
+
+    @media (min-width: 1200px) {
+      max-width: to-rem(288);
+      margin-top: var(--a-margin-x5);
+    }
+  }
+
+  .m-quiz-start__img {
+    display: flex;
+    width: 100%;
+    background: url('../img/quiz/bg-mob.svg') no-repeat left top;
+    border-radius: var(--border-radius-x6);
+
+    @media (min-width: 576px) {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      max-width: to-rem(348);
+      margin-right: 3%;
+      background: none;
+    }
+
+    @media (min-width: 768px) {
+      max-width: to-rem(368);
+    }
+
+    @media (min-width: 1200px) {
+      position: absolute;
+      max-width: to-rem(563);
+      margin-left: auto;
+    }
+
+    @media (min-width: 1500px) {
+      margin-right: 10%;
+    }
+
+    img {
+      max-width: to-rem(335);
+      margin: 0 auto;
+
+      @media (min-width: 576px) {
+        max-width: 100%;
+        margin: 0;
+      }
+    }
+  }
+}
+
+.s-parents__quiz {
+  .m-quiz-start__title {
+    font-size: to-rem(30);
+    font-weight: 700;
+    line-height: 100%;
+    letter-spacing: to-rem(0.96);
+
+    @media (min-width: 576px) {
+      max-width: to-rem(475);
+    }
+
+    @media (min-width: 768px) {
+      max-width: to-rem(780);
+    }
+
+    @media (min-width: 1200px) {
+      font-size: to-rem(48);
+      line-height: 116.667%;
+    }
+  }
+
+  .m-quiz-start__subtitle {
+    display: none;
+  }
+
+  .m-quiz-start__text {
+    font-size: to-rem(16);
+
+    @media (min-width: 576px) {
+      max-width: to-rem(290);
+    }
+
+    @media (min-width: 768px) {
+      max-width: to-rem(350);
+    }
+
+    @media (min-width: 1200px) {
+      max-width: to-rem(644);
+      font-size: to-rem(24);
+    }
+  }
+}

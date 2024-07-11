@@ -1,0 +1,39 @@
+.specialties {
+  .title-h3 {
+    margin-bottom: var(--a-margin-x10);
+    @media (min-width: 980px) {
+      max-width: 70%;
+    }
+    @media (min-width: 1500px) {
+      max-width: none;
+    }
+  }
+
+  .s-feedback {
+    margin: 0;
+  }
+
+  &__filter {
+    display: flex;
+    flex-direction: column;
+    gap: to-rem(20);
+    margin-bottom: to-rem(20);
+    @media (min-width: 980px) {
+      flex-direction: row;
+
+      .a-button {
+        display: none;
+      }
+
+      .a-select {
+        max-width: to-rem(270);
+      }
+    }
+  }
+
+  &__cards {
+    display: flex;
+    flex-direction: column;
+    gap: to-rem(16);
+  }
+}

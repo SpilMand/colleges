@@ -3,13 +3,13 @@
   max-width: to-rem(276);
   margin-bottom: var(--a-margin-x4);
   @media (min-width: 1280px) {
+    margin-bottom: to-rem(0);
+
     &.notMain {
       max-width: unset;
       padding-left: var(--a-padding-x4);
       border-left: to-rem(1) solid var(--color-violet-10);
     }
-
-    margin-bottom: 0;
   }
 
   &__stars {

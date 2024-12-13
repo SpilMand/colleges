@@ -1,0 +1,33 @@
+.m-card-college-rklm {
+  &__span {
+    margin-left: auto;
+    color: var(--color-gray);
+    font-size: to-rem(12);
+
+    &--mobile {
+      display: flex;
+      margin-left: auto;
+      color: var(--color-gray);
+      font-size: to-rem(10);
+      @media (min-width: 950px) {
+        display: none;
+      }
+    }
+  }
+
+  &__top {
+    display: flex;
+  }
+
+  &__title {
+    &--mobile {
+      font-size: to-rem(18);
+    }
+  }
+
+  &__actions {
+    &--mobile {
+      margin-top: to-rem(20);
+    }
+  }
+}

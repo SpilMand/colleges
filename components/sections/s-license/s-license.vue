@@ -1,5 +1,5 @@
 <template>
-  <section v-if="info.attributes?.licence_num" class="s-license section-m">
+  <section v-if="info.attributes" class="s-license section-m">
     <h3 class="title-h3">Лицензия и аккредитация</h3>
     <div class="s-license__content">
       <div class="s-license__card license-card">

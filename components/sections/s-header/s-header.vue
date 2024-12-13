@@ -2,7 +2,13 @@
   <header class="s-header">
     <div class="container">
       <div class="s-header__wrapper">
-        <nuxt-link v-if="!(width <= 1199 && isSearch)" to="/" class="s-header__logo" aria-label="Перейти на главную">
+        <nuxt-link
+          v-if="!(width <= 1199 && isSearch)"
+          to="/"
+          class="s-header__logo"
+          aria-label="Перейти на главную"
+          test-id="link-header-back"
+        >
           <img v-if="width > 768" loading="lazy" src="/img/header/logo.svg" alt="колледжи" />
           <img v-else loading="lazy" src="/img/header/logo-mob.svg" alt="колледжи" />
         </nuxt-link>
@@ -11,41 +17,58 @@
         </div>
         <div :class="['s-header__box', { active: isSearch }]">
           <a-search
-            v-if="router.name !== 'index'"
+            v-if="false"
             :isSearch="isSearch"
             class="s-header__search"
             placeholder="Поиск по сайту"
             @toggleSearch="toggleSearch"
           />
-          <a v-if="width >= 767" class="s-header__phone f-text-s" href="tel:+78003023620">
+          <a v-if="width >= 768" class="s-header__phone f-text-s" test-id="link-header-phone">
             <span>8 800 302-36-20</span>
           </a>
           <div v-if="selectedCity" class="s-header__city f-text-s" @click="isPopup = !isPopup">
             {{ selectedCity }}
           </div>
           <a-button
-            v-if="width >= 767 && !selectedCity"
+            v-if="width >= 768 && !selectedCity"
             label="Выбрать город"
             color="violet-5"
             size="small"
             textSize="f-text-s"
             class="s-header__button f-font-700"
+            test-id="btn-header-ch-city"
             @click="isPopup = !isPopup"
           />
-          <a class="s-header__button scroll" href="#quiz">
-            <a-button label="Подобрать обучение" color="orange" size="small" textSize="f-text-s" class="f-font-700" />
-          </a>
-          <div v-if="width >= 767">
-            <div v-if="isAuthenticated" class="s-header__auth violet-100" @click="logout">
+          <a-button
+            class="s-header__button scroll f-font-700"
+            label="Подобрать обучение"
+            color="orange"
+            size="small"
+            textSize="f-text-s"
+            test-id="link-header-quiz"
+            @click="navigateTo('#quiz')"
+          />
+          <div v-if="false">
+            <div v-if="isAuthenticated" test-id="block-header-logout" class="s-header__auth violet-100" @click="logout">
               <span class="d-flex" v-html="iconAuth"></span>
               <span class="f-text-s">{{ userData?.first_name }}</span>
             </div>
-            <div v-else class="s-header__auth violet-100" @click="isAuth = !isAuth">
+            <div
+              v-else
+              class="s-header__auth violet-100"
+              test-id="block-header-auth"
+              @click="authStore.setPopupAuthShow(true)"
+            >
               <span class="d-flex" v-html="iconAuth"></span>
               <span class="f-text-s">Войти</span>
             </div>
           </div>
-          <div v-if="width < 1500" class="s-header__hamburger" @click="isMenuOpenMobile = !isMenuOpenMobile"></div>
+          <div
+            v-if="width < 1500"
+            class="s-header__hamburger"
+            test-id="block-header-burger"
+            @click="isMenuOpenMobile = !isMenuOpenMobile"
+          ></div>
         </div>
       </div>
     </div>
@@ -64,18 +87,21 @@
             </span>
           </div>
           <a-select
-            v-if="width < 767"
+            v-if="width < 768"
             v-model="selectedValue"
             placeholder="Выбрать город"
+            test-id="header-ch"
+            section-id="header-ch-city"
+            name="city"
             :options="cities"
             @selectedItemId="handleSelectedItemId"
           />
         </template>
         <template #button>
-          <a class="s-header__phone f-text-s" href="tel:+78003023620">
+          <a class="s-header__phone f-text-s" test-id="link-header-phone" href="tel:+78003023620">
             <span>8 800 302-36-20</span>
           </a>
-          <div v-if="width < 767">
+          <div v-if="false">
             <a-button
               v-if="isAuthenticated"
               :img="iconAuth"
@@ -84,6 +110,7 @@
               size="small"
               class="s-header__menu-auth w-100"
               textSize="f-text-s f-font-700"
+              test-id="btn-header-logout-mobile"
               @click="logout"
             />
             <a-button
@@ -94,7 +121,8 @@
               size="small"
               class="s-header__menu-auth w-100"
               textSize="f-text-s f-font-700"
-              @click="isAuth = !isAuth"
+              test-id="btn-header-auth-mobile"
+              @click="authStore.setPopupAuthShow(true)"
             />
           </div>
         </template>
@@ -108,12 +136,19 @@
         showSelectLocation
         placeholder="Выбрать город"
         :options="cities"
+        section-id="header-ch"
+        name="city"
         @save="selectCity"
       >
-        <span class="s-header__popup-location"></span>
+        <!-- <span class="s-header__popup-location"></span> -->
       </a-select>
     </m-popup>
-    <s-auth v-if="isAuth" @openRecovery="openRecovery" @openReg="openReg" @close="isAuth = !isAuth" />
+    <s-auth
+      v-if="authStore.popupAuthShow"
+      @openRecovery="openRecovery"
+      @openReg="openReg"
+      @close="authStore.setPopupAuthShow(false)"
+    />
     <s-auth-reg
       v-if="isReg"
       @mailTransfer="getEmail"
@@ -169,19 +204,19 @@ const apiCities = await getCities({
 });
 
 const openReg = () => {
-  isAuth.value = false;
+  authStore.setPopupAuthShow(false);
   isReg.value = true;
 };
 
 const openAuth = () => {
-  isAuth.value = true;
+  authStore.setPopupAuthShow(true);
   isReg.value = false;
   isRecovery.value = false;
 };
 
 const openRecovery = () => {
   isRecovery.value = true;
-  isAuth.value = false;
+  authStore.setPopupAuthShow(false);
   isReg.value = false;
 };
 
@@ -230,7 +265,6 @@ const toggleSearch = () => {
 const cityTitle = ref('Выберите ваш город');
 const isMenuOpenMobile = ref(false);
 const isPopup = ref(false);
-const isAuth = ref(false);
 const isReg = ref(false);
 const isRegChange = ref(false);
 const isRecovery = ref(false);
@@ -246,8 +280,10 @@ const selectCity = async () => {
   selectedCity.value = selectedOption ? selectedOption?.attributes?.name : '';
   const selectedOptionId = selectedOption ? selectedOption?.id : '';
   const selectedOptionSlug = selectedOption ? selectedOption?.slug?.name : '';
+  const selectedOptionsRp = selectedOption ? selectedOption?.attributes?.name_rp : '';
   cityStore.setSelectedOptionId(selectedOptionId);
   cityStore.setSelectedOptionSlug(selectedOptionSlug);
+  cityStore.setSelectedOptionValueRp(selectedOptionsRp);
   isPopup.value = false;
 };
 
@@ -257,7 +293,7 @@ const loadСities = async () => {
     cities.value = response.data.map(({ id, attributes }) => ({
       id,
       slug: { name: attributes.slug },
-      attributes: { name: attributes.name },
+      attributes: { name: attributes.name, name_rp: attributes.name_rp },
     }));
   }
 };
@@ -270,7 +306,7 @@ const handleSelectedItemId = (itemId, itemSlug, itemValue) => {
 
 watchEffect(() => {
   if (router.query.auth) {
-    isAuth.value = true;
+    authStore.setPopupAuthShow(true);
   }
 
   if (router.query.token && router.query.email) {

@@ -8,8 +8,10 @@
           — это сайт, где собраны<br />
           все колледжи России и информация<br />
           об обучении в них. Здесь ты сможешь выбрать:
-          <nuxt-link class="s-about__desc-link" to="/colleges">колледж,</nuxt-link>
-          &nbsp;<nuxt-link class="s-about__desc-link" to="/specialties">специальность,</nuxt-link>
+          <nuxt-link class="s-about__desc-link" to="/colleges" :test-id="`link-s-about-colleges`">колледж,</nuxt-link>
+          &nbsp;<nuxt-link class="s-about__desc-link" to="/specialties" :test-id="`link-s-about-specialties`"
+            >специальность,</nuxt-link
+          >
           которой хочешь учиться и свою будущую профессию
         </p>
       </div>
@@ -58,12 +60,17 @@ const cards = ref([]);
 //   return [];
 // }
 
-function getDataItems(apiData) {
+function getDataItems(apiData, name) {
   if (apiData && apiData.data) {
-    return apiData.data.map((item) => ({
-      name: item?.attributes?.name,
-      id: item.id,
-    }));
+    return apiData.data.map((item) => {
+      const slug = name === 'directions' ? { slug: item.attributes.slug } : {};
+
+      return {
+        name: item?.attributes?.name,
+        id: item.id,
+        ...slug,
+      };
+    });
   }
   return [];
 }
@@ -80,7 +87,7 @@ watchEffect(() => {
     props.showDirectionsCard
       ? {
           title: computed(() => getTitle(props.apiDirections, 'направление')),
-          items: computed(() => getDataItems(props.apiDirections)),
+          items: computed(() => getDataItems(props.apiDirections, 'directions')),
           iconSrc: '/img/about/icon-2.svg',
           class: 'scroll',
           name: 'directions',

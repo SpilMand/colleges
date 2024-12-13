@@ -102,6 +102,18 @@
       }
     }
   }
+
+  &__title {
+    color: var(--color-white);
+    font-size: 68px;
+    text-transform: uppercase;
+    @media (min-width: 768px) {
+      font-size: 120px;
+    }
+    @media (min-width: 1200px) {
+      font-size: 190px;
+    }
+  }
 }
 
 .s-main-about-box {

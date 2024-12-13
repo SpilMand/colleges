@@ -3,8 +3,8 @@
     <h2 class="s-now-read-news__title title-h2">Сейчас читают</h2>
     <div class="s-now-read-news__box">
       <swiper v-bind="swiperConfig" class="mySwiper">
-        <swiper-slide v-for="(news1, index) in news" :key="index">
-          <m-news-card :info="news1" />
+        <swiper-slide v-for="(newsItem, index) in news" :key="index">
+          <m-news-card :info="newsItem" />
         </swiper-slide>
       </swiper>
       <div class="s-now-read-news-swiper-pagination s-swiper-pagination"></div>
@@ -27,9 +27,13 @@
         </div>
       </div>
       <div class="f-btn-college">
-        <NuxtLink to="/blog/news">
-          <a-button label="Все новости" color="violet-5" size="medium" textSize="f-text-s" />
-        </NuxtLink>
+        <a-button
+          label="Все новости"
+          color="violet-5"
+          size="medium"
+          textSize="f-text-s"
+          @click="navigateTo('/blog/news')"
+        />
       </div>
     </div>
   </section>

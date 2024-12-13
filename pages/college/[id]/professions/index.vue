@@ -1,6 +1,6 @@
 <template>
   <div v-if="professions.data" class="professions">
-    <h3 class="title-h3">Профессии колледжа</h3>
+    <h3 class="title-h3">{{ pageTitle }}</h3>
     <div class="professions__filter">
       <a-select
         placeholder="Любая"
@@ -12,13 +12,12 @@
       <a-select placeholder="Любая" :options="actuality" hint="Актуальность" param="act" @addFilter="addFilter" />
       <s-feedback />
     </div>
-    <div v-if="specialtiesInfo.data" class="professions__cards">
+    <div class="professions__cards">
       <m-college-professions-card
         v-for="(profession, index) in professions.data"
         :key="index"
         :info="profession"
         forWhat="college"
-        :specInfo="specialtiesInfo"
       />
     </div>
     <a-pagination :curPage="curPage" :countPage="professions.meta.page.lastPage" @updateCurPage="updateCurPage" />
@@ -27,92 +26,88 @@
 
 <script setup>
 import getProfessions from '~/api/professions/getProfessions';
-import getSpecialties from '~/api/specialties/getSpecialties';
+// import getSpecialties from '~/api/colleges/getSpecialties';
 import getOksos from '~/api/okso/getOksos';
+import useCanonicalHead from '~/composables/useCanonicalHead';
+
+useCanonicalHead();
 
 definePageMeta({
   layout: 'layout-college',
 });
 
 const props = defineProps({
-  collegeId: { type: String, default: '' },
+  collegeId: { type: Number, default: 0 },
 });
 
 const emit = defineEmits(['blocksNeed', 'isQuestionSet']);
+
+const pageTitle = ref('Профессии колледжа');
+
+useHead({
+  title: `${pageTitle.value} | Колледжи.рф`,
+  // eslint-disable-next-line max-len
+  description: `${pageTitle.value}. Лучший сайт для абитуриентов колледжей. Помогаем с подбором профессии, сравнением колледжей, подсчетом баллов ЕГЭ и ОГЭ. Начните путь к успешной карьере с нами!`,
+});
 
 onMounted(async () => {
   emit('blocksNeed', true, true, true);
   emit('isQuestionSet', false);
   updateCurPage(0);
-  specialties.value = await getOksos({
-    'filter[college_id]': props.collegeId
-  });
+  specialties.value = await getOksos({ 'filter[college_id]': props.collegeId }, props.collegeId);
 });
 
+const professions = ref({});
 const specialties = ref({});
+const relevanceStatuses = ref(['is_perspective', 'is_old', 'is_future']);
 const actuality = ref([
-  { attributes: { value: 'is_perspective', name: 'Перспективные' } },
+  { attributes: { value: 'is_perspective', name: 'Перспективная' } },
   { attributes: { value: 'is_future', name: 'Профессии будущего' } },
-  { attributes: { value: 'is_now', name: 'Востребованные' } },
   { attributes: { value: 'is_old', name: 'Уходящие' } },
 ]);
-const filters = ref({
-  actuality: {
-    is_perspective: false,
-    is_future: false,
-    is_now: false,
-    is_old: false
+const filter = ref({});
+const addFilter = (data) => {
+  const {
+    type,
+    id,
+    attributes: { value },
+  } = data;
+
+  if (type === 'okso-specialties') {
+    filter.value.oksoSpecialties = id.toString();
+  } else if (type === undefined) {
+    relevanceStatuses.value.forEach((status) => (filter.value[status] = false));
+
+    filter.value[value] = true;
   }
-});
-const addFilter = (key, value) => {
-  switch (key) {
-    case 'spec':
-      filters.value.oksoSpecialties = value.id;
-      break;
-    case 'act':
-      for (let filter in filters.value.actuality) {
-        filters.value.actuality[filter] = false;
-      }
-      filters.value.actuality[value.attributes.value] = true;
-      break;
-  }
-  // filters.value.specialty = spec;
-  // if (act) {
-  //   filters.value[act] = true;
-  // }
+
   updateCurPage(0);
 };
 
-const professions = ref({});
-const specialtiesInfo = ref();
+// const specialtiesInfo = ref();
 
 const curPage = ref(0);
 const updateCurPage = async (num) => {
+  const additionallyFilter = Object.keys(filter.value)
+    .filter((k) => relevanceStatuses.value.includes(k) && filter.value[k])
+    .reduce((f, filterKey) => {
+      f[`filter[${filterKey}]`] = true;
+
+      return f;
+    }, {});
+
   curPage.value = num;
   professions.value = await getProfessions({
     'page[number]': curPage.value + 1,
     'page[size]': 9,
     'filter[college_id]': props.collegeId,
-    'filter[oksoSpecialties]': filters.value.oksoSpecialties,
-    'filter[is_perspective]': filters.value.actuality.is_perspective,
-    'filter[is_future]': filters.value.actuality.is_future,
-    'filter[is_now]': filters.value.actuality.is_now,
-    'filter[is_old]': filters.value.actuality.is_old,
+    'filter[oksoSpecialties]': filter.value.oksoSpecialties ? filter.value.oksoSpecialties : undefined,
+    ...additionallyFilter,
   });
-  getSpecInfo();
-};
+  // specialtiesInfo.value = await getSpecialties({
 
-const getSpecInfo = async () => {
-  let arr = [];
-  for (let prof of professions.value.data) {
-    arr.push(prof.id);
-  }
-  specialtiesInfo.value = await getSpecialties({
-    'filter[college_id]': props.collegeId,
-    'filter[professions]': String(arr),
-    'show[professionsIds]': true,
-  })
-}
+  // })
+};
 </script>
 
 <style>

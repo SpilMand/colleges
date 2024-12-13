@@ -14,6 +14,7 @@
                   placeholder="E-mail"
                   class="s-form__input f-text-m"
                   :class="{ invalid: errors.email, valid: eValid.valid }"
+                  test-id="input-s-auth-reg-change-email"
                   @blur="eBlur"
                 />
                 <span v-if="errors.email" class="f-text-xs red mbt2">{{ errors.email }}</span>
@@ -29,13 +30,14 @@
                   size="large"
                   textSize="f-text-m"
                   class="s-form__button"
+                  test-id="btn-s-auth-reg-change-submit"
                   :disabled="isSubmitting || !checked"
                 />
               </div>
             </div>
             <label class="s-form__more">
               <div class="s-form__checkbox">
-                <input v-model="checked" type="checkbox" />
+                <input v-model="checked" type="checkbox" test-id="input-s-auth-reg-change-checkbox" />
                 <span></span>
               </div>
               <p class="s-form__checkbox-label f-text-xs t-left" v-html="label"></p>
@@ -70,7 +72,6 @@ const onSubmit = handleSubmit(async (values) => {
       email: values.email,
       return_url: '?auth=login',
     };
-    console.log('formattedValues', formattedValues);
     await authStore.change(formattedValues);
     emit('openConfirm');
     emit('mailTransfer', values.email);
@@ -81,8 +82,8 @@ const onSubmit = handleSubmit(async (values) => {
 
 const label = ref(
   `Нажимая на кнопку вы принимаете
-<a href="/" target="_blank" class="s-form__politics">Пользовательское соглашение</a>
-и <a href="/" target="_blank" class="s-form__politics">Политики конфиденциальности</a>
+<a href="/agreement" target="_blank" class="s-form__politics">Пользовательское соглашение</a>
+и <a href="/policy" target="_blank" class="s-form__politics">Политики конфиденциальности</a>
 и даёте согласие на обработку персональных данных.`,
 );
 </script>

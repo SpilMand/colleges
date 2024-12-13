@@ -2,13 +2,18 @@
   <section class="s-applicants s-parents section-l">
     <div class="s-applicants__wrapper section-l">
       <div class="container">
-        <NuxtLink v-if="width < 768" class="s-applicants__banner s-parents__banner" to="#form">
+        <NuxtLink
+          v-if="width < 768"
+          class="s-applicants__banner s-parents__banner"
+          to="#form"
+          test-id="link-s-applicants-banner-mobile"
+        >
           <img src="/icons/banner.svg" alt="" />
         </NuxtLink>
         <a-breadcrumbs :items="breadcrumbs" />
         <div class="s-applicants__title s-parents__title">
-          <h1 class="title-h2">{{ title }}</h1>
-          <NuxtLink v-if="width > 767" to="#form" class="">
+          <h1 class="title-h2">{{ pageTitle }}</h1>
+          <NuxtLink v-if="width >= 768" to="#form" class="" test-id="link-s-applicants-banner">
             <img src="/icons/banner.svg" alt="" />
           </NuxtLink>
         </div>
@@ -16,69 +21,25 @@
           <div class="s-applicants__desc desc-mid mbx10">
             Учёба и образование необходимы практически на каждом этапе жизни человека. Так, после окончания 9 класса,
             у многих учеников возникает вопрос «Что делать дальше?». Ответы на все эти вопросы вы найдёте на нашем сайте
-            <nuxt-link to="/" class="f-font-700 f-link">Колледжи.рф.</nuxt-link>
+            <nuxt-link to="/" class="f-font-700 f-link" test-id="link-s-applicants-main">Колледжи.рф.</nuxt-link>
           </div>
           <div class="s-applicants__faq">
-            <NuxtLink class="s-applicants__link" to="/">
-              <a-button
-                label="Какие есть колледжи?"
-                :img="arrow"
-                :center="false"
-                color="outline"
-                class="s-applicants__button"
-              />
-            </NuxtLink>
-            <NuxtLink class="s-applicants__link" to="/">
-              <a-button
-                label="Какие есть профессии?"
-                :img="arrow"
-                :center="false"
-                color="outline"
-                class="s-applicants__button"
-              />
-            </NuxtLink>
-            <NuxtLink class="s-applicants__link" to="/">
-              <a-button
-                label="Какую специальность лучше выбрать?"
-                :img="arrow"
-                :center="false"
-                color="outline"
-                class="s-applicants__button"
-              />
-            </NuxtLink>
-            <NuxtLink class="s-applicants__link" to="/">
-              <a-button
-                label="Какие есть специальности?"
-                :img="arrow"
-                :center="false"
-                color="outline"
-                class="s-applicants__button"
-              />
-            </NuxtLink>
-            <NuxtLink class="s-applicants__link" to="/">
-              <a-button
-                label="Где лучше учиться и куда поступить?"
-                :img="arrow"
-                :center="false"
-                color="outline"
-                class="s-applicants__button"
-              />
-            </NuxtLink>
-            <NuxtLink class="s-applicants__link" to="/">
-              <a-button
-                label="Кем лучше стать? Какую профессию выбрать?"
-                :img="arrow"
-                :center="false"
-                color="outline"
-                class="s-applicants__button"
-              />
-            </NuxtLink>
+            <a-button
+              v-for="question of faqQuestions"
+              :key="question"
+              :label="question"
+              :img="arrow"
+              :center="false"
+              color="outline"
+              class="s-applicants__button"
+              test-id="link-s-applicants-faq-colleges"
+            />
           </div>
         </div>
         <h3 class="mbx10 title-h3 f-font-700">
           Вся полезная информация о колледжах обновляется каждый день. На сайте представлены:
         </h3>
-        <m-main-list class="s-applicants-main__list" :list="list" />
+        <m-main-list class="s-applicants-main__list" section-id="s-applicants" :list="list" />
       </div>
     </div>
     <div class="container">
@@ -116,12 +77,15 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
+  pageTitle: {
+    type: String,
+    default: 'Абитуриентам',
+  },
 });
 
 const { width } = useWindowSize();
 const list = ref({});
-const title = ref('Абитуриентам');
-const breadcrumbs = [{ label: 'Страница второго порядка', link: '/parents' }];
+const breadcrumbs = [{ label: 'Абитуриентам', link: '/parents' }];
 
 const info = ref([
   {
@@ -161,6 +125,16 @@ const info = ref([
     img: '/img/parents/icon/price.svg',
   },
 ]);
+
+const faqQuestions = ref([
+  'Какие есть колледжи?',
+  'Какие есть профессии?',
+  'Какую специальность лучше выбрать?',
+  'Какие есть специальности?',
+  'Где лучше учиться и куда поступить?',
+  'Кем лучше стать? Какую профессию выбрать?',
+]);
+
 watchEffect(() => {
   list.value = [
     {

@@ -10,6 +10,7 @@
             :name="name"
             :placeholder="placeholder"
             class="a-select__label f-font-500"
+            :test-id="`input-${sectionId}-${name}`"
             @blur="hide()"
             @input="handleInput"
           />
@@ -23,14 +24,19 @@
           </svg>
         </div>
         <transition name="a-select__list">
-          <div v-if="optionsThis.length > 0" :class="{ visible: visible }" class="a-select__list" @mousedown.prevent>
+          <div v-if="optionsThis.length > 0" v-show="visible" class="a-select__list" @mousedown.prevent>
             <div class="a-select__wrapper" :class="{ multiple: multiple }">
               <div v-for="(item, index) in optionsThis" :key="index">
                 <div v-if="!multiple" class="a-select__option" @click="select(item, this)">
                   <label>{{ item?.attributes?.name }}</label>
                 </div>
                 <div v-else class="a-select__option">
-                  <input :id="index" type="checkbox" @click="select(item, this)" />
+                  <input
+                    :id="index"
+                    type="checkbox"
+                    :test-id="`checkbox-${sectionId}-${name}`"
+                    @click="select(item, this)"
+                  />
                   <label :for="index">{{ item?.attributes?.name }}</label>
                 </div>
               </div>
@@ -38,7 +44,7 @@
           </div>
         </transition>
       </div>
-      <span v-if="showSelectLocation" class="a-select__location">
+      <!-- <span v-if="showSelectLocation" class="a-select__location">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_3907_2190)">
             <path
@@ -56,7 +62,7 @@
             </clipPath>
           </defs>
         </svg>
-      </span>
+      </span> -->
     </div>
 
     <div v-if="showSelectButton" class="a-select__block">
@@ -89,6 +95,7 @@ const props = defineProps({
   showSelectLocation: { type: Boolean, default: false },
   multiple: { type: Boolean, default: false },
   param: { type: String, default: '' },
+  sectionId: { type: String, default: '' },
 });
 
 const cityStore = useCityIdStore();
@@ -126,7 +133,7 @@ const handleInput = () => {
 };
 
 const select = (item) => {
-  emit('addFilter', props.param, item);
+  emit('addFilter', item);
   emit('update:modelValue', item.value);
   emit('selectedItemId', item?.id, item?.slug?.name, item?.attributes?.name);
   emit('get-data', item);
@@ -136,7 +143,7 @@ const select = (item) => {
   }
   if (!props.multiple) {
     hide();
-    selectedItemLabel.value = item?.attributes?.name;
+    selectedItemLabel.value = item?.attributes?.name.charAt(0).toUpperCase() + item?.attributes?.name.slice(1);
   } else {
   }
 };
@@ -172,7 +179,6 @@ const toggle = (value, element) => {
 };
 
 const hide = () => {
-  // console.log(event);
   // if (event) {
   //   const targetElement = event.target;
   //   if (targetElement && !targetElement.closest('.a-select')) {

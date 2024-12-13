@@ -6,16 +6,12 @@
     :disabled="disabled"
     role="button"
     :area-label="label"
+    :test-id="testId"
     @click="isOpen = !isOpen"
   >
     <span :class="`${textSize} f-font-${textWeight}`" class="a-button__label">{{ label }}</span>
     <!-- <img v-if="img" :src="img" class="a-button__arrow" :class="isOpen ? 'active' : ''" /> -->
-    <div
-      v-if="img"
-      class="a-button__img"
-      :class="{'active': isOpen && needRot}"
-      v-html="img"
-    />
+    <div v-if="img" class="a-button__img" :class="{ active: isOpen && needRot }" v-html="img" />
   </button>
 </template>
 
@@ -66,6 +62,10 @@ const props = defineProps({
       return ['violet-5', 'orange', 'outline', 'outline-orange', 'white'].indexOf(value) !== -1;
     },
     default: 'violet-5',
+  },
+  testId: {
+    type: String,
+    default: '',
   },
 });
 

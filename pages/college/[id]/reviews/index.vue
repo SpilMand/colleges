@@ -1,6 +1,6 @@
 <template>
   <div class="reviews">
-    <h3 class="title-h3">Отзывы о колледже</h3>
+    <h3 class="title-h3">{{ pageTitle }}</h3>
     <div class="reviews__content">
       <m-review-card
         v-for="(review, index) in reviews"
@@ -24,11 +24,26 @@
 </template>
 
 <script setup>
+import useCanonicalHead from '~/composables/useCanonicalHead';
+
+useCanonicalHead();
+
 definePageMeta({
   layout: 'layout-college-review',
+  validate() {
+    return false;
+  },
 });
 const curPage = ref(0);
 const countPage = ref(10);
+const pageTitle = ref('Отзывы о колледже');
+
+useHead({
+  title: `${pageTitle.value} | Колледжи.рф`,
+  // eslint-disable-next-line max-len
+  description: `${pageTitle.value}. Лучший сайт для абитуриентов колледжей. Помогаем с подбором профессии, сравнением колледжей, подсчетом баллов ЕГЭ и ОГЭ. Начните путь к успешной карьере с нами!`,
+});
+
 const updateCurPage = (num) => {
   curPage.value = num;
 };

@@ -1,0 +1,24 @@
+.s-specialities-banner {
+  span {
+    display: block;
+    margin-bottom: to-rem(8);
+    color: var(--color-gray);
+    font-size: to-rem(10);
+    line-height: to-rem(13);
+  }
+
+  &__title {
+    margin-bottom: to-rem(8);
+  }
+
+  &__item {
+    padding: var(--a-padding-x4);
+    background-color: var(--color-gray-light);
+    border-radius: var(--border-radius-x6);
+  }
+
+  &__top {
+    display: flex;
+    justify-content: space-between;
+  }
+}

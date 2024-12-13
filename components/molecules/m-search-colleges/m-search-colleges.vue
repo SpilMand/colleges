@@ -1,35 +1,35 @@
 <template>
   <div class="m-search-colleges">
-    <nuxt-link to="/colleges" class="">
-      <a-button
-        class="w-100 m-search-colleges__button"
-        :label="'Искать колледж'"
-        color="outline"
-        textSize="f-text-m"
-        :img="colleges"
-        :center="false"
-      />
-    </nuxt-link>
-    <nuxt-link to="/professions" class="">
-      <a-button
-        class="w-100 m-search-colleges__button"
-        :label="'Искать профессию'"
-        color="outline"
-        textSize="f-text-m"
-        :img="professions"
-        :center="false"
-      />
-    </nuxt-link>
-    <nuxt-link to="/specialties" class="">
-      <a-button
-        class="w-100 m-search-colleges__button"
-        :label="'Искать специальность'"
-        color="outline"
-        textSize="f-text-m"
-        :img="specialties"
-        :center="false"
-      />
-    </nuxt-link>
+    <a-button
+      class="w-100 m-search-colleges__button"
+      :label="'Искать колледж'"
+      color="outline"
+      textSize="f-text-m"
+      :img="colleges"
+      :center="false"
+      test-id="link-m-search-colleges-main"
+      @click="navigateTo('/colleges')"
+    />
+    <a-button
+      class="w-100 m-search-colleges__button"
+      :label="'Искать профессию'"
+      color="outline"
+      textSize="f-text-m"
+      :img="professions"
+      :center="false"
+      test-id="link-m-search-colleges-professions"
+      @click="navigateTo('/professions')"
+    />
+    <a-button
+      class="w-100 m-search-colleges__button"
+      :label="'Искать специальность'"
+      color="outline"
+      textSize="f-text-m"
+      :img="specialties"
+      :center="false"
+      test-id="link-m-search-colleges-specialties"
+      @click="navigateTo('/specialties')"
+    />
   </div>
 </template>
 <script setup>

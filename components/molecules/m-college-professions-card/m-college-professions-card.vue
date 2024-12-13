@@ -1,99 +1,57 @@
 <template>
-  <div v-if="info.attributes" class="m-college-professions-card">
-    <div class="m-college-professions-card__recomendation">
-      <span v-if="info.attributes.is_perspective">Перспективная</span>
-      <span v-else-if="info.attributes.is_now">Востребованная</span>
-      <span v-else-if="info.attributes.is_future">Профессия будущего</span>
-      <span v-else-if="info.attributes.is_old">Устаревающая</span>
+  <nuxt-link
+    :test-id="`link-m-college-profesions-card-${info.id}`"
+    class="m-college-professions-card-link"
+    :to="`/profession/${info.id}/specialties`"
+  >
+    <p v-if="forWhat == 'specialty'"></p>
+    <div v-if="info.attributes" class="m-college-professions-card">
+      <div class="m-college-professions-card__recomendation">
+        <span v-for="(recommendation, index) in getRecommendations" :key="index">{{ recommendation }}</span>
+      </div>
+
+      <h4 class="m-college-professions-card__title">{{ info.attributes.name }}</h4>
+      <ul v-if="forWhat == 'college'" class="m-college-professions-card__info f-text-xs f-font-700">
+        <li>
+          <span>Стоимость (₽/год)</span>
+          <span class="f-text-s">от {{ info.attributes.calc_data.min_cost }} тыс. </span>
+        </li>
+        <li>
+          <span>Срок обучения</span>
+          <span class="f-text-s">{{ info.time }}</span>
+        </li>
+        <li>
+          <span>Бюджетных мест</span>
+          <span class="f-text-s">{{ info.budget }}</span>
+        </li>
+      </ul>
+      <ul v-else-if="forWhat == 'specialty'" class="m-college-professions-card__info f-text-xs f-font-700">
+        <li>
+          <span>Колледжей</span>
+          <span class="f-text-s">{{ info.attributes.calc_data.count_colleges }}</span>
+        </li>
+      </ul>
     </div>
-    <h4 class="m-college-professions-card__title">{{ info.attributes.name.split('профессия ')[1] }}</h4>
-    <ul v-if="forWhat == 'college'" class="m-college-professions-card__info f-text-xs f-font-700">
-      <li>
-        <span>Стоимость (₽/год)</span>
-        <span v-if="selectedSpecInfo.cost > 0" class="f-text-s">
-          от {{ Number(selectedSpecInfo.cost).toLocaleString() }} тыс. 
-        </span>
-        <span v-else class="f-text-s">бесплатно</span>
-      </li>
-      <li>
-        <span>Срок обучения</span>
-        <span class="f-text-s">{{ duration }}</span>
-      </li>
-      <!-- <li>
-        <span>Бюджетных мест</span>
-        <span class="f-text-s">{{ selectedSpecInfo.places || 'нет' }}</span>
-      </li> -->
-    </ul>
-    <ul v-else-if="forWhat == 'specialty'" class="m-college-professions-card__info f-text-xs f-font-700">
-      <li>
-        <span>Колледжей</span>
-        <span class="f-text-s">{{ info.attributes.calc_data.count_colleges }}</span>
-      </li>
-    </ul>
-  </div>
+  </nuxt-link>
 </template>
 
 <script setup>
 const props = defineProps({
   info: { type: Object, default: () => ({}) },
   forWhat: { type: String, default: '' },
-  specInfo: { type: Object, default: () => ({}) }
+  professions: { type: Object, default: () => ({}) },
 });
 
-const specArray = ref([]);
-// const selectedDuration = ref();
-// const selectedCost = ref();
-// const selectedPlaces = ref();
+const recommendations = ref({
+  is_perspective: 'Перспективная',
+  is_future: 'Профессия будущего',
+  is_old: 'Уходящая',
+});
 
-onMounted(() => {
-  // selectSpecInfo();
-})
-
-const selectedSpecInfo =  computed(() => {
-  let selectedDuration;
-  let selectedCost;
-  let selectedPlaces;
-  if (props.specInfo.data) {
-    for (let item of props.specInfo.data) {
-      for (let att of item.attributes.professions_ids) {
-        if (att == props.info.id) {
-          specArray.value.push(item);
-        }
-      }
-    }
-  }
-  for (let item of specArray.value) {
-    if (!selectedDuration || selectedDuration > item.attributes.duration) {
-      selectedDuration = item.attributes.duration;
-    }
-    if (!selectedCost || selectedCost > item.attributes.cost && item.attributes.cost != 0) {
-      selectedCost = item.attributes.cost;
-    }
-    if (!selectedPlaces || selectedPlaces < item.attributes.budget_places) {
-      selectedPlaces = item.attributes.budget_places;
-    }
-  }
-  let obj = {
-    duration: selectedDuration,
-    cost: selectedCost,
-    places: selectedPlaces
-  };
-  return obj;
-})
-
-const duration = computed(() => {
-  let years = selectedSpecInfo.value.duration / 12;
-  years = Math.floor(years);
-  let months = selectedSpecInfo.value.duration % 12;
-  let durationText;
-  if (years == 1) {
-    durationText = `от ${years} года ${months} мес.`;
-  } else if (years > 1) {
-    durationText = `от ${years} лет ${months} мес.`;
-  } else {
-    durationText = `от ${months} мес.`;
-  }
-  return durationText;
+const getRecommendations = computed(() => {
+  return Object.keys(recommendations.value)
+    .filter((recomendation) => props.info.attributes[recomendation])
+    .map((recomendation) => recommendations.value[recomendation]);
 });
 </script>
 

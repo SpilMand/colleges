@@ -17,6 +17,7 @@
         size="large"
         textSize="f-text-m"
         class="m-quiz-start__button"
+        :test-id="`btn-${sectionId}-start-quiz`"
         @click="startQuiz"
       />
     </div>
@@ -28,9 +29,8 @@ defineProps({
   quizTitle: { type: String, default: '' },
   quizSubtitle: { type: String, default: '' },
   quizText: { type: String, default: '' },
+  sectionId: { type: String, default: '' },
 });
-
-import { defineEmits } from 'vue';
 
 const emit = defineEmits(['startQuiz']);
 const startQuiz = () => {

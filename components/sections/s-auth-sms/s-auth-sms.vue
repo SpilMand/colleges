@@ -77,8 +77,6 @@
   </section>
 </template>
 <script setup>
-import { ref } from 'vue';
-
 const pin1 = ref('');
 const pin2 = ref('');
 const pin3 = ref('');
@@ -154,9 +152,9 @@ const getField = (fieldNumber) => {
 const checkPinCode = () => {
   const fullPin = pin1.value + pin2.value + pin3.value + pin4.value + pin5.value;
   if (fullPin.length === 5) {
-    console.log('Пин-код введен: ' + fullPin);
+    // console.log('Пин-код введен: ' + fullPin);
   } else {
-    console.log('Пожалуйста, введите все 5 цифр пин-кода.');
+    // console.log('Пожалуйста, введите все 5 цифр пин-кода.');
   }
 };
 

@@ -15,6 +15,7 @@
                     placeholder="Пароль"
                     class="s-form__input f-text-m"
                     :class="{ invalid: errors.password, valid: pValid.valid }"
+                    test-id="input-s-auth-reg-reset-password"
                     @blur="pBlur"
                   />
                   <div
@@ -35,6 +36,7 @@
                     placeholder="Повторите пароль"
                     class="s-form__input f-text-m"
                     :class="{ invalid: errors.passwordConfirm, valid: pcValid.valid }"
+                    test-id="input-s-auth-reg-reset-password-confirm"
                     @blur="pcBlur"
                   />
                   <div
@@ -54,6 +56,7 @@
                   size="large"
                   textSize="f-text-m"
                   class="s-form__button"
+                  test-id="btn-s-auth-reg-reset-submit"
                   :disabled="isSubmitting"
                 />
               </div>
@@ -100,7 +103,7 @@ const onSubmit = handleSubmit(async (values) => {
     await authStore.resetPassword(formattedValues);
     emit('close');
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 });
 

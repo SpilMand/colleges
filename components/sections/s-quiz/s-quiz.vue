@@ -6,6 +6,7 @@
         :quizTitle="quizTitle"
         :quizSubtitle="quizSubtitle"
         :quizText="quizText"
+        section-id="s-quiz"
         @startQuiz="startQuiz"
       />
       <m-quiz-step
@@ -13,6 +14,7 @@
         :question="questions[step].question"
         :answers="questions[step].answers"
         :backText="backText"
+        section-id="s-quiz"
         @change-step="handleStepChange"
         @back="back"
       />
@@ -21,6 +23,7 @@
         type="quiz"
         title="Мы подобрали для тебя колледж и обучение. Заполни форму, чтобы узнать больше"
         :answers="answers"
+        section-id="s-quiz"
       />
     </div>
   </section>

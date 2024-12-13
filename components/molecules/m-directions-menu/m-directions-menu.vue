@@ -5,6 +5,8 @@
         <NuxtLink
           class="m-directions-menu__link"
           :to="{ path: `/colleges/${direction.slug}`, params: { id: direction.id } }"
+          :test-id="`link-m-menu-anchor-directions-${direction.slug}`"
+          @click="emit('choosedDirection')"
           >{{ direction.name }}
         </NuxtLink>
       </li>
@@ -19,6 +21,8 @@ defineProps({
     default: () => ({}),
   },
 });
+
+const emit = defineEmits(['choosedDirection']);
 </script>
 
 <style lang="scss">

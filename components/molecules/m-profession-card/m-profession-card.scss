@@ -1,6 +1,7 @@
 .m-profession-card {
   display: flex;
   flex-direction: column;
+  justify-content: end;
   padding: var(--a-padding-x6) var(--a-padding-x4);
   background-color: var(--color-gray-light);
   border-radius: var(--border-radius-x6);
@@ -14,6 +15,11 @@
   @media (min-width: 1200px) {
     padding: var(--a-padding-x8) var(--a-padding-x6);
     gap: to-rem(32);
+  }
+
+  .m-profession-card__status {
+    width: 100%;
+    margin-bottom: to-rem(6);
   }
 
   .m-profession-card__box {

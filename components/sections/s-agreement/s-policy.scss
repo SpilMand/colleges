@@ -1,0 +1,27 @@
+.s-policy {
+  padding-top: var(--a-padding-x10);
+
+  .s-policy__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: to-rem(30);
+  }
+
+  .s-policy__title {
+    word-break: break-word;
+  }
+
+  .s-policy__box {
+    display: flex;
+    flex-direction: column;
+    gap: to-rem(15);
+
+    ul {
+      padding-left: to-rem(20);
+
+      li {
+        list-style: disc;
+      }
+    }
+  }
+}

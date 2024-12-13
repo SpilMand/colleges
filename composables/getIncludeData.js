@@ -17,11 +17,17 @@ export function getIncludeData(data, included, type) {
     case 'admissionOffices':
       includeType = 'admission-offices';
       break;
-    case 'theme':
+    case 'questionThemes':
       includeType = 'question-themes';
       break;
-    case 'user':
-      includeType = 'users';
+    case 'children':
+      includeType = 'questions';
+      break;
+    case 'author':
+      includeType = 'authors';
+      break;
+    case 'media':
+      includeType = 'media';
       break;
     default:
       includeType = type;
@@ -43,6 +49,9 @@ export function getIncludeData(data, included, type) {
         }
       }
     }
-  } catch {}
+  } catch {
+    // нужно переписать
+    // console.log('ERROR');
+  }
   return arr;
 }

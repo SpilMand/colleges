@@ -80,7 +80,7 @@
           <span class="blog-article__author-name f-text-s">Мария Косыренкова</span>
         </div>
       </div>
-      <div class="blog-article__share">
+      <div v-if="false" class="blog-article__share">
         <div class="blog-article__share-title f-text-m f-font-700">Поделиться</div>
         <div class="blog-article__share-actions">
           <div class="blog-article__share-action">
@@ -95,16 +95,28 @@
         </div>
       </div>
     </div>
-    <s-ask placeholder="Оставить комментарий…" btnText="Отправить" />
+    <s-ask v-if="false" placeholder="Оставить комментарий…" btnText="Отправить" />
   </div>
 </template>
 
 <script setup>
+import useCanonicalHead from '~/composables/useCanonicalHead';
+
+useCanonicalHead();
+
 definePageMeta({
   layout: 'layout-article',
 });
 
 const emit = defineEmits(['setType']);
+
+const pageTitle = ref('Запуск инновационного курса обучения: студенты готовятся к будущему');
+
+useHead({
+  title: `${pageTitle.value} | Колледжи.рф`,
+  // eslint-disable-next-line max-len
+  description: `${pageTitle.value}. Лучший сайт для абитуриентов колледжей. Помогаем с подбором профессии, сравнением колледжей, подсчетом баллов ЕГЭ и ОГЭ. Начните путь к успешной карьере с нами!`,
+});
 
 onMounted(() => {
   emit('setType', true);

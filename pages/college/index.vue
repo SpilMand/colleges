@@ -2,4 +2,8 @@
   <div></div>
 </template>
 
-<script setup></script>
+<script setup>
+import useCanonicalHead from '~/composables/useCanonicalHead';
+
+useCanonicalHead();
+</script>

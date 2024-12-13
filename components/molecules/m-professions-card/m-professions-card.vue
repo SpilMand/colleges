@@ -1,13 +1,19 @@
 <template>
   <div class="m-professions-card">
     <h4 class="m-professions-card__title title-h4">
-      {{ professions.name.split('профессия ')[1] }}
+      {{ professions.name }}
     </h4>
     <div class="m-professions-card-wrap">
-      <nuxt-link :to="`professions/${professions.id}`" class="">
+      <nuxt-link :to="getLinkUrl" class="" :test-id="`link-m-professions-card-professions-${professions.id}`">
         <a-button class="w-100" :label="collegesLabel" color="white" textSize="f-text-m" :img="arrow" :center="false" />
       </nuxt-link>
-      <nuxt-link v-if="type === 'profession'" :to="`professions/${professions.id}/specialties`" class="">
+
+      <nuxt-link
+        v-if="type === 'profession'"
+        :to="`/profession/${professions.id}/specialties`"
+        class=""
+        :test-id="`link-m-professions-card-specialties-${professions.id}`"
+      >
         <a-button
           class="w-100"
           :label="specialtiesLabel"
@@ -17,16 +23,18 @@
           :center="false"
         />
       </nuxt-link>
-      <nuxt-link v-else-if="type === 'specialty'" to="/" class="">
-        <a-button
-          class="w-100"
-          :label="professionsLabel"
-          color="white"
-          textSize="f-text-m"
-          :img="arrow"
-          :center="false"
-        />
-      </nuxt-link>
+
+      <nuxt-link
+        v-else-if="type === 'specialty'"
+        class="w-100"
+        :label="professionsLabel"
+        color="white"
+        textSize="f-text-m"
+        :img="arrow"
+        :center="false"
+        :test-id="`link-m-professions-card-specialty-${professions.id}`"
+        @click="navigateTo(`/specialty/${professions.id}/professions`)"
+      />
     </div>
   </div>
 </template>
@@ -40,6 +48,22 @@ const props = defineProps({
   },
   type: { type: String, default: '' },
 });
+
+const getLinkUrl = computed(() => {
+  if (props.type === 'specialty') {
+    return `/specialty/${props.professions.id}`;
+  }
+
+  return `/profession/${props.professions.id}`;
+});
+const openCard = () => {
+  if (props.type === 'profession') {
+    navigateTo(`/profession/${props.professions.id}`);
+  } else {
+    navigateTo(`/specialty/${props.professions.id}`);
+  }
+};
+
 const collegesLabel = props.professions.colleges + ' ' + declineWord(props.professions.colleges, 'колледж');
 const specialtiesLabel =
   props.professions.specialties + ' ' + declineWord(props.professions.specialties, 'специальность');

@@ -6,6 +6,7 @@
       :class="['m-social__item', 'm-social__' + item.icon]"
       target="_blank"
       :href="item.href"
+      :test-id="`link-${sectionId}-social-${item.icon}`"
     >
     </a>
   </div>
@@ -16,6 +17,10 @@ defineProps({
   items: {
     type: Array,
     required: true,
+  },
+  sectionId: {
+    type: String,
+    default: '',
   },
 });
 </script>

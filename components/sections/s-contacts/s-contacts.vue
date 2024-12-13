@@ -1,42 +1,37 @@
 <template>
   <section v-if="info.attributes" class="s-contacts">
-    <h3 v-if="!isAdmission" class="title-h3">Контакты колледжа</h3>
+    <h3 v-if="!isAdmission" class="title-h3">{{ pageTitle }}</h3>
     <h3 v-else class="title-h3">Приемная комиссия колледжа</h3>
     <div class="s-contacts__content f-text-m" :class="{ isAdmission: isAdmission }">
       <div class="s-contacts__contact s-contacts__phone">
         <img src="/icons/phone.svg" alt="" />
-        <span v-for="(phone, index) in contacts.attributes.phones" :key="index">{{ phone.phone }}</span>
+        <span v-for="(phone, index) in info.attributes.phone" :key="index">{{ phone }}</span>
       </div>
       <div v-if="isAdmission" class="s-contacts__contact location">
         <img src="/icons/location.svg" alt="" />
-        <span>г. {{ city }}, {{ contacts.attributes.address }}</span>
+        <span>г. {{ city.attributes.name }}, {{ info.attributes.address }}</span>
       </div>
       <div class="s-contacts__contact">
         <img src="/icons/internet.svg" alt="" />
-        <a v-if="!isAdmission" :href="'http://' + info.attributes.site" target="blank">{{
-          info.attributes.site.split('/')[0]
-        }}</a>
-        <a v-else :href="'http://' + contacts.attributes.site" target="blank">{{
-          info.attributes.site.split('/')[0]
-        }}</a>
+        <a :href="info.attributes.site" target="blank">{{ info.attributes.site }}</a>
       </div>
-      <div v-if="isAdmission" class="s-contacts__contact">
+      <!-- <div v-if="isAdmission" class="s-contacts__contact">
         <img src="/icons/calendar.svg" alt="" />
         <span>{{ contacts.attributes.schedule[0].days }}: {{ contacts.attributes.schedule[0].time }}</span>
-      </div>
+      </div> -->
       <div class="s-contacts__contact">
         <img src="/icons/mail.svg" alt="" />
-        <span>{{ contacts.attributes.email }}</span>
+        <span>{{ info.attributes.email[0] }}</span>
       </div>
       <div v-if="!isAdmission" class="s-contacts__contact location">
         <img src="/icons/location.svg" alt="" />
-        <span>г. {{ city }}, {{ info.attributes.faculties_addresses[0] }}</span>
+        <span>г. {{ city.attributes.name }}, {{ info.attributes.address }}</span>
       </div>
-      <div v-if="isAdmission" class="s-contacts__contact">
+      <!-- <div v-if="isAdmission" class="s-contacts__contact">
         <img src="/icons/college.svg" alt="" />
-        <!-- <span>Приемная комиссия работает круглый год</span> -->
+        <span>Приемная комиссия работает круглый год</span>
         {{ startDate }} - {{ endDate }}
-      </div>
+      </div> -->
       <!-- <div v-if="!isAdmission" class="s-contacts__actions">
         <a href="">
           <img src="/icons/telegram-white.svg" alt="" />
@@ -54,12 +49,7 @@
       <m-map
         v-if="!isAdmission && info.attributes.coordinates"
         class="s-contacts__map"
-        :markers="[
-          {
-            name: `${info.attributes.short_name}`,
-            settings: { coordinates: coordinates },
-          },
-        ]"
+        :markers="markers"
         :center="coordinates"
       />
       <s-feedback />
@@ -73,6 +63,7 @@ const props = defineProps({
   city: { type: String, default: '' },
   contacts: { type: Object, default: () => ({}) },
   isAdmission: { type: Boolean, default: false },
+  pageTitle: { type: String, default: 'Контакты колледжа' },
 });
 
 const coordinates = computed(() => {
@@ -84,16 +75,20 @@ const coordinates = computed(() => {
   return arr;
 });
 
+const markers = computed(() => {
+  return { data: [props.info] };
+});
+
 const dateOptions = ref({
   day: 'numeric',
   month: 'long',
 });
 
-const startDate = computed(() => {
-  let date = new Date(props.contacts.attributes.start_date);
-  date = date.toLocaleDateString('ru', dateOptions.value);
-  return date;
-});
+// const startDate = computed(() => {
+//   let date = new Date(props.contacts.attributes.start_date);
+//   date = date.toLocaleDateString('ru', dateOptions.value);
+//   return date;
+// });
 
 const endDate = computed(() => {
   let date = new Date(props.contacts.attributes.end_date);

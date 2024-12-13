@@ -1,7 +1,6 @@
 import { useRuntimeConfig } from '#imports';
 
 export default async function change(opts, token) {
-  console.log('token', token);
   const config = useRuntimeConfig();
 
   try {

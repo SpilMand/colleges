@@ -52,7 +52,7 @@ const onSubmit = async () => {
     };
     await authStore.resend(formattedValues);
   } catch (error) {
-    console.log('error', error);
+    console.error(error);
   }
   resetTimer();
 };

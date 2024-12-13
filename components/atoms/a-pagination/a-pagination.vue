@@ -5,6 +5,7 @@
       src="/icons/arrow-prev.svg"
       class="arrow"
       :class="{ disabled: curPage == 0 }"
+      test-id="link-a-pagination-arrow-prev"
       @click="SwitchPage('left')"
     >
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -24,11 +25,18 @@
           { active: num == curPage + 1 },
           num != '...' ? 'a-pagination__pages-num' : 'a-pagination__pages-points',
         ]"
+        :test-id="`link-a-pagination-${num}`"
         @click="SwitchPage('', num)"
         >{{ num }}
       </a>
     </div>
-    <a href="#start" class="arrow" :class="{ disabled: curPage == countPage - 1 }" @click="SwitchPage('right')">
+    <a
+      href="#start"
+      class="arrow"
+      :class="{ disabled: curPage == countPage - 1 }"
+      test-id="link-a-pagination-arrow-next"
+      @click="SwitchPage('right')"
+    >
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clip-path="url(#clip0_1860_1801)">
           <path

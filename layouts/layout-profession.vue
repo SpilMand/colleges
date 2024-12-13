@@ -4,7 +4,13 @@
   <main class="layout-profession container">
     <div class="layout-profession__grid">
       <div class="layout-profession__grid-main">
-        <NuxtPage :info="content" @forWhat="forWhat" @needBlocks="needBlocks" />
+        <NuxtPage
+          :info="content"
+          :professionId="route.params.id"
+          :page="page"
+          @forWhat="forWhat"
+          @needBlocks="needBlocks"
+        />
       </div>
       <div class="layout-profession__grid-right">
         <s-feedback :isMobile="false" :collegeHelp="true" />
@@ -22,18 +28,22 @@
 import getProfession from '~/api/professions/getProfession';
 import getProfessions from '~/api/professions/getProfessions';
 import getOkso from '~/api/okso/getOkso';
+
 const page = ref();
 const headTitle = ref();
 const route = useRoute();
 const content = ref({});
 const contentSimilar = ref({});
+
 const forWhat = (what, title) => {
   page.value = what;
   headTitle.value = title;
 };
 
 onMounted(async () => {
-  await loadData();
+  setTimeout(async () => {
+    await loadData();
+  }, 5);
 });
 
 async function loadData() {
@@ -49,9 +59,15 @@ async function loadData() {
   });
 }
 
-watch(page, async () => {
-  await loadData();
-});
+watch(
+  route,
+  async () => {
+    setTimeout(async () => {
+      await loadData();
+    }, 10);
+  },
+  { deep: true },
+);
 
 const moreCollegesNeed = ref(false);
 const subTitle = ref();

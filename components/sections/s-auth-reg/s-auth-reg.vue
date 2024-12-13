@@ -18,6 +18,7 @@
                   placeholder="Имя"
                   class="s-form__input f-text-m"
                   :class="{ invalid: errors.firstName, valid: fnValid.valid }"
+                  test-id="input-s-auth-reg-firstName"
                   @blur="fnBlur"
                 />
                 <span v-if="errors.firstName" class="f-text-xs red mbt2">{{ errors.firstName }}</span>
@@ -30,6 +31,7 @@
                   placeholder="Фамилия"
                   class="s-form__input f-text-m"
                   :class="{ invalid: errors.lastName, valid: lnValid.valid }"
+                  test-id="input-s-auth-reg-lastName"
                   @blur="lnBlur"
                 />
                 <span v-if="errors.lastName" class="f-text-xs red mbt2">{{ errors.lastName }}</span>
@@ -42,6 +44,7 @@
                   placeholder="E-mail"
                   class="s-form__input f-text-m"
                   :class="{ invalid: errors.email, valid: eValid.valid }"
+                  test-id="input-s-auth-reg-email"
                   @blur="eBlur"
                 />
                 <span v-if="errors.email" class="f-text-xs red mbt2">{{ errors.email }}</span>
@@ -55,6 +58,7 @@
                   placeholder="Телефон"
                   class="s-form__input f-text-m"
                   :class="{ invalid: errors.phone, valid: fValid.valid }"
+                  test-id="input-s-auth-reg-phone"
                   @blur="fBlur"
                 />
                 <span v-if="errors.phone" class="f-text-xs red mbt2">{{ errors.phone }}</span>
@@ -68,6 +72,7 @@
                     placeholder="Пароль"
                     class="s-form__input f-text-m"
                     :class="{ invalid: errors.password, valid: pValid.valid }"
+                    test-id="input-s-auth-reg-password"
                     @blur="pBlur"
                   />
                   <div
@@ -88,6 +93,7 @@
                     placeholder="Повторите пароль"
                     class="s-form__input f-text-m"
                     :class="{ invalid: errors.passwordConfirm, valid: pcValid.valid }"
+                    test-id="input-s-auth-reg-password-confirm"
                     @blur="pcBlur"
                   />
                   <div
@@ -110,13 +116,14 @@
                   size="large"
                   textSize="f-text-m"
                   class="s-form__button"
+                  test-id="btn-s-auth-reg-submit"
                   :disabled="isSubmitting || !checked"
                 />
               </div>
             </div>
             <label class="s-form__more">
               <div class="s-form__checkbox">
-                <input v-model="checked" type="checkbox" />
+                <input v-model="checked" type="checkbox" test-id="input-s-auth-reg-checkbox" />
                 <span></span>
               </div>
               <p class="s-form__checkbox-label f-text-xs t-left" v-html="label"></p>
@@ -254,8 +261,8 @@ fill="none" xmlns="http://www.w3.org/2000/svg">
 
 const label = ref(
   `Нажимая на кнопку вы принимаете
-<a href="/" target="_blank" class="s-form__politics">Пользовательское соглашение</a>
-и <a href="/" target="_blank" class="s-form__politics">Политики конфиденциальности</a>
+<a href="/agreement" target="_blank" class="s-form__politics">Пользовательское соглашение</a>
+и <a href="/policy" target="_blank" class="s-form__politics">Политики конфиденциальности</a>
 и даёте согласие на обработку персональных данных.`,
 );
 </script>

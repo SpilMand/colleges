@@ -80,7 +80,7 @@ import {
   YandexMapMarker,
   YandexMapClusterer,
 } from 'vue-yandex-maps';
-import { getIncludeData } from '~/composables/getIncludeData';
+// import { getIncludeData } from '~/composables/getIncludeData';
 
 const props = defineProps({
   markers: { type: Object, default: () => ({}) },
@@ -88,17 +88,14 @@ const props = defineProps({
   // center: { type: Array, default: () => ['37.617644', '55.755819'] }
 });
 
-const settings = ref({});
-
-watch(props, () => {
-  try {
-    settings.value = {
-      location: {
-        center: props.markers.data[0].attributes.coordinates.split(/\s*,\s*/).reverse(),
-        zoom: 9,
-      },
-    };
-  } catch {}
+const settings = computed(() => {
+  return {
+    location: {
+      center: props.markers.data[0].attributes.coordinates.split(/\s*,\s*/).reverse(),
+      zoom: 9,
+    },
+    mapsRenderWaitDuration: false,
+  };
 });
 
 // const gridSize = computed(() => {

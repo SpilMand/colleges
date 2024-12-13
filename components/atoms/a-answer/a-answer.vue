@@ -13,9 +13,9 @@ defineProps({
   name: { type: String, default: 'Имя Фамилия' },
   date: { type: String, default: '1 января 1970' },
   text: { type: String, default: 'Ответ' },
-})
+});
 </script>
 
 <style>
-  @import './a-answer.scss';
+@import './a-answer.scss';
 </style>

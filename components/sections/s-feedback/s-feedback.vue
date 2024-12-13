@@ -1,15 +1,33 @@
 <template>
   <section class="s-feedback" :class="{ mobile: isMobile }">
-    <a v-if="collegeHelp" class="scroll" href="#quiz"
-      ><a-button label="Помочь выбрать колледж" :img="collegeIcon" :center="false"
-    /></a>
-    <a-button v-else label="Задать вопрос" :img="questionIcon" :center="false" />
-    <a v-if="!isQuestion" class="scroll" href="#form"
-      ><a-button label="Нужна помощь" :img="helpIcon" :center="false"
-    /></a>
-    <a-search v-else placeholder="Поиск вопроса" :isSearch="true" />
-    <a-select v-if="isQuestion" placeholder="Любая" hint="Сортировка" />
-    <a-rklm v-if="!isMobile" />
+    <a-button
+      v-if="collegeHelp"
+      class="scroll"
+      label="Помочь выбрать колледж"
+      :img="collegeIcon"
+      test-id="btn-s-feedback-help-college"
+      :center="false"
+      @click="scrollTo"
+    />
+    <a-button v-else label="Задать вопрос" :img="questionIcon" test-id="btn-s-feedback-question" :center="false" />
+    <a-button
+      v-if="!isQuestion"
+      class="scroll"
+      label="Нужна помощь"
+      :img="helpIcon"
+      test-id="btn-s-feedback-help"
+      :center="false"
+      @click="scrollTo"
+    />
+    <a-search v-else placeholder="Поиск вопроса" test-id="search-s-feedback-question" :isSearch="true" />
+    <a-select
+      v-if="isQuestion"
+      placeholder="Любая"
+      test-id="search-s-feedback-sort"
+      section-id="s-feedback"
+      hint="Сортировка"
+    />
+    <!-- <a-rklm v-if="!isMobile" /> -->
   </section>
 </template>
 
@@ -36,6 +54,12 @@ const questionIcon = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none
 const helpIcon = `<svg width="24" height="20" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M21 10.424V9C21 6.61305 20.0517 4.32387 18.3639 2.63604C16.6761 0.948212 14.3869 0 12 0C9.613 0 7.32382 0.948212 5.63599 2.63604C3.94816 4.32387 2.99995 6.61305 2.99995 9V10.424C1.95111 10.8858 1.09275 11.694 0.568572 12.7131C0.0443932 13.7322 -0.113788 14.9004 0.120508 16.0222C0.354805 17.1441 0.967358 18.1513 1.85562 18.8755C2.74388 19.5996 3.85394 19.9966 4.99995 20C5.53038 20 6.03909 19.7893 6.41416 19.4142C6.78924 19.0391 6.99995 18.5304 6.99995 18V12C6.99995 11.4696 6.78924 10.9609 6.41416 10.5858C6.03909 10.2107 5.53038 10 4.99995 10V9C4.99995 7.14349 5.73745 5.36301 7.0502 4.05025C8.36296 2.7375 10.1434 2 12 2C13.8565 2 15.6369 2.7375 16.9497 4.05025C18.2625 5.36301 19 7.14349 19 9V10C18.4695 10 17.9608 10.2107 17.5857 10.5858C17.2107 10.9609 17 11.4696 17 12V18H14C13.7347 18 13.4804 18.1054 13.2928 18.2929C13.1053 18.4804 13 18.7348 13 19C13 19.2652 13.1053 19.5196 13.2928 19.7071C13.4804 19.8946 13.7347 20 14 20H19C20.146 19.9966 21.256 19.5996 22.1443 18.8755C23.0325 18.1513 23.6451 17.1441 23.8794 16.0222C24.1137 14.9004 23.9555 13.7322 23.4313 12.7131C22.9071 11.694 22.0488 10.8858 21 10.424ZM4.99995 18C4.2043 18 3.44124 17.6839 2.87863 17.1213C2.31602 16.5587 1.99995 15.7957 1.99995 15C1.99995 14.2044 2.31602 13.4413 2.87863 12.8787C3.44124 12.3161 4.2043 12 4.99995 12V18ZM19 18V12C19.7956 12 20.5587 12.3161 21.1213 12.8787C21.6839 13.4413 22 14.2044 22 15C22 15.7957 21.6839 16.5587 21.1213 17.1213C20.5587 17.6839 19.7956 18 19 18Z" fill="#4C3B8A"/>
 </svg>`;
+
+const scrollTo = () => {
+  const form = document.querySelector('#form');
+
+  form.scrollIntoView({ block: 'center' });
+};
 </script>
 
 <style>

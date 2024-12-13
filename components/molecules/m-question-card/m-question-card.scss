@@ -34,7 +34,6 @@
       display: flex;
       flex-direction: column;
       gap: to-rem(8);
-      text-transform: capitalize;
       @media (min-width: 1280px) {
         flex-direction: row;
         gap: to-rem(12);
@@ -68,23 +67,60 @@
     align-items: center;
     gap: to-rem(20);
 
+    &-buttons {
+      position: relative;
+      display: flex;
+      gap: to-rem(10);
+
+      &:hover {
+        .m-question-card__actions-hint {
+          display: block;
+        }
+      }
+
+      b {
+        cursor: pointer;
+      }
+    }
+
+    &-hint {
+      position: absolute;
+      top: to-rem(-10);
+      left: to-rem(-10);
+      display: none;
+      padding: var(--a-padding-x3);
+      background-color: var(--color-violet-10);
+      border: to-rem(1) solid var(--color-violet-100);
+      border-radius: var(--border-radius-x3);
+      white-space: nowrap;
+    }
+
     &-action {
       display: flex;
       align-items: center;
       gap: to-rem(6);
+      cursor: pointer;
+
+      svg {
+        position: relative;
+      }
 
       &.like {
         svg {
-          position: relative;
           top: to-rem(-2);
         }
       }
 
       &.dislike {
         svg {
-          position: relative;
           top: to-rem(3);
           transform: scaleY(-1);
+        }
+      }
+
+      &.active {
+        path {
+          fill: var(--color-violet-80);
         }
       }
     }

@@ -16,19 +16,19 @@
 
   .m-social__vk {
     &::before {
-      content: url('../icons/vk.svg');
+      content: url('~/public//icons/vk.svg');
     }
   }
 
   .m-social__youtube {
     &::before {
-      content: url('../icons/youtube.svg');
+      content: url('~/public/icons/youtube.svg');
     }
   }
 
   .m-social__telegram {
     &::before {
-      content: url('../icons/telegram.svg');
+      content: url('~/public/icons/telegram.svg');
     }
   }
 }

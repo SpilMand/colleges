@@ -1,14 +1,18 @@
 <template>
   <div class="m-profession-card cards-stretched">
     <div class="m-profession-card__title">
-      <NuxtLink :to="`/professions/${professions.id}`">
+      <NuxtLink :to="`/profession/${professions.id}`">
         <h4 class="title-h4">
-          {{ professions?.attributes?.name.split('профессия ')[1] }}
+          {{ professions?.attributes?.name }}
         </h4>
       </NuxtLink>
-      <div v-if="professionStatus">
-        <span class="f-text-xxs f-font-700 violet-100">
-          {{ professionStatus }}
+      <div v-if="statuses.length" class="status-row">
+        <span
+          v-for="(status, index) in statuses"
+          :key="index"
+          class="f-text-xxs f-font-700 violet-100 m-profession-card__status"
+        >
+          {{ status }}
         </span>
       </div>
     </div>
@@ -27,30 +31,34 @@
         <div v-else class="f-text-xxl f-font-700 red">Нет</div>
       </div>
       <div class="m-profession-card__wrap">
-        <a-button
-          class="w-100"
-          :label="
-            professions?.attributes?.calc_data?.count_colleges +
-            ' ' +
-            declineWord(professions?.attributes?.calc_data?.count_colleges, 'колледж')
-          "
-          color="white"
-          textSize="f-text-m"
-          :img="arrow"
-          :center="false"
-        />
-        <a-button
-          class="w-100"
-          :label="
-            professions?.attributes?.calc_data?.count_colleges +
-            ' ' +
-            declineWord(professions?.attributes?.calc_data?.count_specialties, 'специальность')
-          "
-          color="white"
-          textSize="f-text-m"
-          :img="arrow"
-          :center="false"
-        />
+        <NuxtLink :to="`/profession/${professions.id}/specialties`">
+          <a-button
+            class="w-100"
+            :label="
+              professions?.attributes?.calc_data?.count_colleges +
+              ' ' +
+              declineWord(professions?.attributes?.calc_data?.count_colleges, 'колледж')
+            "
+            color="white"
+            textSize="f-text-m"
+            :img="arrow"
+            :center="false"
+          />
+        </NuxtLink>
+        <NuxtLink :to="`/profession/${professions.id}/specialties`">
+          <a-button
+            class="w-100"
+            :label="
+              professions?.attributes?.calc_data?.count_specialties +
+              ' ' +
+              declineWord(professions?.attributes?.calc_data?.count_specialties, 'специальность')
+            "
+            color="white"
+            textSize="f-text-m"
+            :img="arrow"
+            :center="false"
+          />
+        </NuxtLink>
       </div>
     </div>
   </div>
@@ -66,13 +74,18 @@ const props = defineProps({
   },
 });
 
-const professionStatus = computed(() => {
+const statuses = computed(() => {
+  const availableStatuses = [];
   const attributes = props.professions?.attributes;
-  if (!attributes) return '';
-  if (attributes.is_perspective) return 'Перспективная';
-  if (attributes.is_now) return 'востребованная сейчас';
-  if (attributes.is_old) return 'устаревающая';
-  if (attributes.is_future) return 'Профессия будущего';
+
+  if (!attributes) return availableStatuses;
+
+  if (attributes.is_perspective) availableStatuses.push('Перспективная');
+  if (attributes.is_favorite) availableStatuses.push('Актуально сейчас');
+  if (attributes.is_old) availableStatuses.push('Устаревающая');
+  if (attributes.is_future) availableStatuses.push('Профессия будущего');
+
+  return availableStatuses;
 });
 
 const durationText = ref(null);

@@ -4,7 +4,7 @@
       <form class="s-form" @submit.prevent="onSubmit">
         <div class="s-form__wrapper">
           <div class="s-form__content">
-            <h2 class="s-form__title f-text-xxxl">Авторизуйтесь и оставьте отзыв</h2>
+            <h2 class="s-form__title f-text-xxxl">{{ popupTitle }}</h2>
             <div class="s-form__subtitle f-text-m">
               Ещё нет аккаунта?
               <span class="f-link cursor-pointer" @click="openReg">Зарегистрироваться</span>
@@ -18,6 +18,7 @@
                   placeholder="E-mail"
                   class="s-form__input f-text-m"
                   :class="{ invalid: errors.email, valid: eValid.valid }"
+                  test-id="input-s-auth-email"
                   @blur="eBlur"
                 />
                 <span v-if="errors.email" class="f-text-xs red mbt2">{{ errors.email }}</span>
@@ -31,6 +32,7 @@
                     placeholder="Пароль"
                     class="s-form__input f-text-m"
                     :class="{ invalid: errors.password, valid: pValid.valid }"
+                    test-id="input-s-auth-password"
                     @blur="pBlur"
                   />
                   <div
@@ -60,13 +62,14 @@
                   size="large"
                   textSize="f-text-m"
                   class="s-form__button"
+                  test-id="btn-s-auth-submit"
                   :disabled="isSubmitting || !checked"
                 />
               </div>
             </div>
             <label class="s-form__more">
               <div class="s-form__checkbox">
-                <input v-model="checked" type="checkbox" />
+                <input v-model="checked" type="checkbox" test-id="input-s-auth-checkbox" />
                 <span></span>
               </div>
               <p class="s-form__checkbox-label f-text-xs t-left" v-html="label"></p>
@@ -89,6 +92,15 @@ import { useAuthStore } from '~/store/useAuthStore';
 const emit = defineEmits(['close', 'openRecovery', 'openReg']);
 const checked = ref(true);
 const authStore = useAuthStore();
+const route = useRoute();
+const popupTitle = computed(() => {
+  switch (route.name) {
+    case 'college-id-questions':
+      return 'Авторизуйтесь и оставьте вопрос';
+    default:
+      return 'Авторизуйтесь и оставьте отзыв';
+  }
+});
 const openReg = () => emit('openReg');
 const errorMessage = ref('');
 const { errors, handleSubmit, isSubmitting, defineField } = useForm({
@@ -159,8 +171,8 @@ fill="none" xmlns="http://www.w3.org/2000/svg">
 
 const label = ref(
   `Нажимая на кнопку вы принимаете
-<a href="/" target="_blank" class="s-form__politics">Пользовательское соглашение</a>
- и <a href="/" target="_blank" class="s-form__politics">Политики конфиденциальности</a>
+<a href="/agreement" target="_blank" test-id="link-s-auth-agreement" class="s-form__politics">Пользовательское соглашение</a>
+ и <a href="/policy" target="_blank" test-id="link-s-auth-policy" class="s-form__politics">Политики конфиденциальности</a>
  и даёте согласие на обработку персональных данных.`,
 );
 </script>

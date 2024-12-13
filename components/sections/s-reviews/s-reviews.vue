@@ -1,5 +1,5 @@
 <template>
-  <section class="s-reviews section-l swiper-default f-fade">
+  <section v-if="reviews.data" class="s-reviews section-l swiper-default f-fade">
     <div class="container">
       <h2 class="s-reviews__title title-h2">{{ title }}</h2>
       <div class="s-reviews__box">
@@ -74,7 +74,7 @@ async function fetchData() {
   reviews.value = await getArticles(
     {
       'filter[article_type]': 'comments',
-      'include': 'galleries',
+      'include': 'media',
     },
     'reviews',
   );

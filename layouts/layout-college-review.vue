@@ -7,19 +7,23 @@
         <div class="layout-college-review__right">
           <div class="layout-college-review__right-inner">
             <a-rating :isMain="true" />
-            <NuxtLink to="#review-send">
-              <a-button label="Оставить отзыв" color="orange" />
-            </NuxtLink>
+            <a-button
+              label="Оставить отзыв"
+              color="orange"
+              test-id="btn-college-reviews-send"
+              @click="navigateTo('#review-send')"
+            />
             <a-button
               label="Фильтры по отзывам"
               :img="arrowDown"
               :needRot="true"
+              test-id="btn-college-reviews-filter"
               @click="isFilterOpen = !isFilterOpen"
             />
             <div v-if="isFilterOpen" class="layout-college-review__filter">
               <div class="layout-college-review__filter-title f-text-m">Отзывы с оценками:</div>
               <div class="layout-college-review__filter-param">
-                <input id="5star" type="checkbox" />
+                <input id="5star" type="checkbox" test-id="input-college-reviews-checkbox-stars-5" />
                 <label for="5star">
                   <ul>
                     <li><img src="/icons/star-full.svg" /></li>
@@ -32,7 +36,7 @@
                 <span class="layout-college-review__filter-count f-text-s gray">15</span>
               </div>
               <div class="layout-college-review__filter-param">
-                <input id="4star" type="checkbox" />
+                <input id="4star" type="checkbox" test-id="input-college-reviews-checkbox-stars-4" />
                 <label for="4star">
                   <ul>
                     <li><img src="/icons/star-full.svg" /></li>
@@ -45,7 +49,7 @@
                 <span class="layout-college-review__filter-count f-text-s gray">15</span>
               </div>
               <div class="layout-college-review__filter-param">
-                <input id="3star" type="checkbox" />
+                <input id="3star" type="checkbox" test-id="input-college-reviews-checkbox-stars-3" />
                 <label for="3star">
                   <ul>
                     <li><img src="/icons/star-full.svg" /></li>
@@ -58,7 +62,7 @@
                 <span class="layout-college-review__filter-count f-text-s gray">15</span>
               </div>
               <div class="layout-college-review__filter-param">
-                <input id="2star" type="checkbox" />
+                <input id="2star" type="checkbox" test-id="input-college-reviews-checkbox-stars-2" />
                 <label for="2star">
                   <ul>
                     <li><img src="/icons/star-full.svg" /></li>
@@ -71,7 +75,7 @@
                 <span class="layout-college-review__filter-count f-text-s gray">15</span>
               </div>
               <div class="layout-college-review__filter-param">
-                <input id="1star" type="checkbox" />
+                <input id="1star" type="checkbox" test-id="input-college-reviews-checkbox-stars-1" />
                 <label for="1star">
                   <ul>
                     <li><img src="/icons/star-full.svg" /></li>
@@ -87,11 +91,32 @@
             <div v-if="isFilterOpen" class="layout-college-review__sort">
               <div class="layout-college-review__sort-title f-text-m">Сортировка:</div>
               <ul>
-                <li><input id="1" type="radio" name="sort" checked /><label for="1">Сначала новые</label></li>
-                <li><input id="2" type="radio" name="sort" /><label for="2">Сначала старые</label></li>
-                <li><input id="3" type="radio" name="sort" /><label for="3">Сначала с выс. оценкой</label></li>
-                <li><input id="4" type="radio" name="sort" /><label for="4">Сначала с низ. оценкой</label></li>
-                <li><input id="5" type="radio" name="sort" /><label for="5">Сначала полезные</label></li>
+                <li>
+                  <input id="1" type="radio" name="sort" test-id="input-college-reviews-sort-new" checked /><label
+                    for="1"
+                    >Сначала новые</label
+                  >
+                </li>
+                <li>
+                  <input id="2" type="radio" name="sort" test-id="input-college-reviews-sort-old" /><label for="2"
+                    >Сначала старые</label
+                  >
+                </li>
+                <li>
+                  <input id="3" type="radio" name="sort" test-id="input-college-reviews-sort-high" /><label for="3"
+                    >Сначала с выс. оценкой</label
+                  >
+                </li>
+                <li>
+                  <input id="4" type="radio" name="sort" test-id="input-college-reviews-sort-low" /><label for="4"
+                    >Сначала с низ. оценкой</label
+                  >
+                </li>
+                <li>
+                  <input id="5" type="radio" name="sort" test-id="input-college-reviews-sort-usefull" /><label for="5"
+                    >Сначала полезные</label
+                  >
+                </li>
               </ul>
             </div>
           </div>
@@ -114,7 +139,7 @@ const info = ref();
 
 onMounted(async () => {
   info.value = await getCollege(route.params.id, {
-    include: 'city,monitorings,forms,galleries',
+    include: 'city,monitorings,forms,media',
   });
 });
 

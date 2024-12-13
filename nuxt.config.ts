@@ -6,10 +6,12 @@ export default defineNuxtConfig({
   // devServer: {
   //   port: 8000
   // },
+
   ssr: false,
   debug: true,
+
   vite: {
-    plugins: [eslintPlugin()],
+    plugins: [eslintPlugin({ fix: true })],
     css: {
       preprocessorOptions: {
         scss: {
@@ -18,6 +20,44 @@ export default defineNuxtConfig({
           `,
         },
       },
+    },
+  },
+
+  hooks: {
+    'pages:extend'(pages) {
+      // add a route
+      pages.push({
+        name: 'colleges',
+        path: '/colleges/:firstFilter?/:secondFilter?/:thirdFilter?/:fourthFilter?/:fifthFilter?/:sixthFilter?',
+        file: '~/pages/colleges/index.vue',
+      });
+      pages.push({
+        name: 'professions',
+        path: '/professions/:firstFilter?/:secondFilter?/:thirdFilter?/:fourthFilter?',
+        file: '~/pages/professions/index.vue',
+      });
+      pages.push({
+        name: 'specialties',
+        path: '/specialties/:firstFilter?/:secondFilter?',
+        file: '~/pages/specialties/index.vue',
+      });
+
+      // remove routes
+      function removePagesMatching(pattern: RegExp, _pages: NuxtPage[] = []) {
+        const pagesToRemove = [];
+        for (const page of _pages) {
+          if (pattern.test(page.file)) {
+            pagesToRemove.push(page);
+          } else {
+            removePagesMatching(pattern, page.children);
+          }
+        }
+        for (const page of pagesToRemove) {
+          _pages.splice(_pages.indexOf(page), 1);
+        }
+      }
+
+      removePagesMatching(/\.ts$/, pages);
     },
   },
 
@@ -87,8 +127,10 @@ export default defineNuxtConfig({
       ],
     },
   },
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ['@/assets/styles/main.scss'],
+
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: {
     global: true,
@@ -107,4 +149,6 @@ export default defineNuxtConfig({
       },
     },
   },
+
+  compatibilityDate: '2024-07-29',
 });

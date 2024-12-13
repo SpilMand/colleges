@@ -19,9 +19,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
 import getSpecialties from '~/api/colleges/getSpecialties';
 import getForms from '~/api/forms/getForms';
+import useCanonicalHead from '~/composables/useCanonicalHead';
+
+useCanonicalHead();
 
 definePageMeta({
   layout: 'layout-college',
@@ -32,6 +34,19 @@ const props = defineProps({
   info: { type: Object, default: () => ({}) },
 });
 
+watch(
+  () => props.info,
+  (val) => {
+    const pageTitle = ref(`Специальности колледжа «${val.attributes.short_name}»`);
+
+    useHead({
+      title: `${pageTitle.value} | Колледжи.рф`,
+      // eslint-disable-next-line max-len
+      description: `${pageTitle.value}. Лучший сайт для абитуриентов колледжей. Помогаем с подбором профессии, сравнением колледжей, подсчетом баллов ЕГЭ и ОГЭ. Начните путь к успешной карьере с нами!`,
+    });
+  },
+);
+
 const eduForm = await getForms();
 const eduBase = ref([
   { attributes: { value: '9', name: 'После 9 класса' } },
@@ -41,9 +56,15 @@ const eduBase = ref([
 const specialties = ref();
 const filters = ref([]);
 
-const addFilter = (key, value) => {
-  filters.value[key] = value;
+const addFilter = ({ type, id, attributes }) => {
+  if (type === 'forms') {
+    filters.value.formsId = id;
+  } else if (type === undefined) {
+    filters.value.base = attributes.value;
+  }
+
   curPage.value = 0;
+
   updateCurPage(curPage.value);
 };
 
@@ -54,8 +75,8 @@ const updateCurPage = async (num) => {
     'page[number]': curPage.value + 1,
     'page[size]': 15,
     'include': 'oksoSpecialty,form',
-    'filter[form]': filters.value.form ? filters.value.form.id : undefined,
-    'filter[base]': filters.value.base ? filters.value.base.attributes.value : undefined,
+    'filter[form]': filters.value.formsId ? filters.value.formsId : undefined,
+    'filter[base]': filters.value.base ? filters.value.base : undefined,
   });
 };
 

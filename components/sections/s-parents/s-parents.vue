@@ -2,13 +2,13 @@
   <section class="s-parents section-l">
     <div class="s-parents__wrapper section-l">
       <div class="container">
-        <NuxtLink v-if="width < 768" class="s-parents__banner" to="#form">
+        <NuxtLink v-if="width < 768" class="s-parents__banner" test-id="link-s-parents-form-mobile" to="#form">
           <img src="/icons/banner.svg" alt="" />
         </NuxtLink>
         <a-breadcrumbs :items="breadcrumbs" />
         <div class="s-parents__title">
-          <h1 class="title-h2">{{ title }}</h1>
-          <NuxtLink v-if="width > 767" to="#form" class="">
+          <h1 class="title-h2">{{ titlePage }}</h1>
+          <NuxtLink v-if="width >= 768" to="#form" class="" test-id="link-s-parents-form">
             <img src="/icons/banner.svg" alt="" />
           </NuxtLink>
         </div>
@@ -22,7 +22,7 @@
 
         <h3 class="mbx10 title-h3 f-font-700">На сайте представлены:</h3>
 
-        <m-main-list :list="list" />
+        <m-main-list section-id="s-parents" :list="list" />
       </div>
     </div>
     <div class="container">
@@ -60,11 +60,14 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
+  titlePage: {
+    type: String,
+    default: 'Родителям',
+  },
 });
 
 const { width } = useWindowSize();
-const title = ref('Родителям');
-const breadcrumbs = [{ label: 'Страница второго порядка', link: '/parents' }];
+const breadcrumbs = [{ label: 'Родителям', link: '/parents' }];
 const info = ref([
   {
     title: 'Аккредитации и лицензии',

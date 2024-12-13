@@ -10,7 +10,7 @@
     margin: 0 to-rem(-16);
     padding: var(--a-padding-x10) var(--a-padding-x4);
     background-color: var(--color-violet-20);
-    background-image: url('../img/form/bg-mob.svg');
+    background-image: url('/img/form/bg-mob.svg');
     background-repeat: no-repeat;
     background-position: right top;
     background-size: contain;
@@ -23,13 +23,13 @@
     @media (min-width: 768px) {
       margin: 0;
       padding: var(--a-padding-x10) var(--a-padding-x8);
-      background-image: url('../img/form/bg-tab.svg');
+      background-image: url('/img/form/bg-tab.svg');
       border-radius: var(--border-radius-x12);
     }
 
     @media (min-width: 1200px) {
       padding: var(--a-padding-x20) var(--a-padding-x30);
-      background-image: url('../img/form/bg.svg');
+      background-image: url('/img/form/bg.svg');
       border-radius: var(--border-radius-x15);
     }
   }
@@ -167,8 +167,11 @@
       border-radius: var(--border-radius-x1);
 
       &::before {
-        content: url('../img/form/check.svg');
+        content: '';
         visibility: hidden;
+        width: to-rem(16);
+        height: to-rem(16);
+        background: url('/img/form/check.svg') center no-repeat;
         opacity: 0;
         transition: all ease 0.3s;
       }
@@ -209,7 +212,7 @@
     .s-form__wrapper {
       margin: 0;
       padding: var(--a-padding-x10) var(--a-padding-x4);
-      background: url('../img/quiz/step.svg') no-repeat left bottom;
+      background: url('/img/quiz/step.svg') no-repeat left bottom;
       background-color: inherit;
 
       @media (min-width: 576px) {
@@ -309,7 +312,7 @@
       display: flex;
       overflow: hidden;
       justify-content: center;
-      background-image: url('../img/decor-logo.svg');
+      background-image: url('/img/decor-logo.svg');
       background-repeat: no-repeat;
       background-position: to-rem(-25);
       background-size: 120%;
@@ -346,17 +349,17 @@
       margin: 0 auto;
       padding: var(--a-padding-x10) 0;
       background-color: var(--color-violet-100);
-      background-image: url('../img/form/bg-mob-stretch.svg');
+      background-image: url('/img/form/bg-mob-stretch.svg');
       border-radius: none;
 
       @media (min-width: 768px) {
         padding: var(--a-padding-x10) 0;
-        background-image: url('../img/form/bg-tab-stretch.svg');
+        background-image: url('/img/form/bg-tab-stretch.svg');
       }
 
       @media (min-width: 1200px) {
         padding: var(--a-padding-x20) 0;
-        background-image: url('../img/form/bg-stretch.svg');
+        background-image: url('/img/form/bg-stretch.svg');
       }
     }
 
@@ -402,7 +405,7 @@
         border-color: var(--color-white);
 
         &::before {
-          content: url('../img/form/check-white.svg');
+          content: url('/img/form/check-white.svg');
         }
       }
     }

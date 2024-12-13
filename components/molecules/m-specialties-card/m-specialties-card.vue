@@ -1,9 +1,12 @@
 <template>
   <div class="m-specialties-card cards-stretched" :class="{ alternative: alternative }">
     <div class="m-specialties-card__inner">
-      <NuxtLink :to="{ path: `/specialties/${options.id}`, params: { id: options.id } }" class="title-h4">{{
-        options.name
-      }}</NuxtLink>
+      <NuxtLink
+        :to="{ path: `/specialty/${options.id}`, params: { id: options.id } }"
+        class="title-h4"
+        :test-id="`link-m-specialties-card-${options.id}`"
+        >{{ options.name }}</NuxtLink
+      >
       <div class="m-specialties-card__wrap">
         <p class="m-specialties-card__subtitle f-text-m">{{ options.qualification }}</p>
         <span v-if="options.isAd" class="m-specialties-card__info f-text-xxs gray">Реклама</span>
@@ -14,12 +17,13 @@
           :label="'Узнать больше'"
           color="orange"
           textSize="f-text-m"
+          :test-id="`btn-m-specialties-card-${options.id}-more`"
           :img="arrow"
           :center="false"
         />
       </div>
       <ul v-if="!options.isAd" class="m-specialties-card__list">
-        <li v-if="width > 767" class="m-specialties-card__list-item head f-text-xs gray">
+        <li v-if="width >= 768" class="m-specialties-card__list-item head f-text-xs gray">
           <span class="m-specialties-card__list-param">название колледжа</span>
           <span class="m-specialties-card__list-param">форма обучения</span>
           <span class="m-specialties-card__list-param">срок обучения</span>
@@ -35,6 +39,7 @@
               params: { id: college.college_id },
             }"
             class="m-specialties-card__list-item"
+            :test-id="`link-m-specialties-card-${options.id}-option`"
           >
             <div class="m-specialties-card__list-param college-title">
               <img :src="college.url" />
@@ -66,15 +71,16 @@
               <span v-if="windowWidth < 768" class="m-specialties-card__list-param-label gray">
                 аккредитация специальности
               </span>
-              <span v-if="options.isAccredited" class="green">аккредитована</span>
-              <span v-else class="red">не аккредитована</span>
+              <!-- <span v-if="options.isAccredited" class="green">аккредитована</span>
+              <span v-else class="red">не аккредитована</span> -->
             </div>
           </NuxtLink>
         </li>
       </ul>
       <a
-        :href="`/specialties/${options.id}`"
+        :href="`/specialty/${options.id}`"
         class="m-specialties-card__more violet-100 f-font-700 f-text-s"
+        :test-id="`link-m-specialties-card-${options.id}-all`"
       >
         Все колледжи
       </a>
@@ -89,7 +95,7 @@ const { width } = useWindowSize();
 
 // import getSpecialties from '~/api/specialties/getSpecialties';
 
-const props = defineProps({
+defineProps({
   options: { type: Object, default: () => ({}) },
   isAd: { type: Boolean, default: false },
   alternative: { type: Boolean, default: false },

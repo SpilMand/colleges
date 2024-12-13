@@ -4,40 +4,57 @@
     <div class="container">
       <a-breadcrumbs :items="breadcrumbs" />
     </div>
-    <s-article-head />
+    <s-article-head :info="info" />
     <div class="container">
       <div class="layout-article__grid section-m">
         <div class="layout-article__content">
-          <NuxtPage @setType="setType" />
+          <NuxtPage :info="info" :author="author" @setType="setType" />
         </div>
-        <div class="layout-article__right">
+        <div v-if="false" class="layout-article__right">
           <a-rklm />
         </div>
       </div>
       <s-quiz class="section-m" />
       <s-now-read-news v-if="isNews" :news="news" />
-      <s-now-read-articles v-else title="Похожие статьи" :articles="articles" />
-      <s-form
+      <!-- <s-now-read-articles v-else title="Похожие статьи" :articles="articles" /> -->
+      <!-- <s-form
         class="section-l"
         title="Всегда будь в курсе!"
         subtitle="Подпишись на рассылку, читай, где тебе удобно и как удобно!"
         checkboxLabel="Я согласен на получение информационных рассылок, а также принимаю <br> 
-        условия <a href='/' target='_blank' class='s-form__politics'>Политики конфиденциальности сайта Колледжи.рф</a>"
+        условия <a href='/policy' target='_blank' 
+        class='s-form__politics'>Политики конфиденциальности сайта Колледжи.рф</a>"
         type="mail"
-      />
+      /> -->
     </div>
   </main>
   <s-footer />
 </template>
 
 <script setup>
-const breadcrumbs = [{ label: 'Статьи и новости', link: '/blog' }, { label: 'Статья_id' }];
+import getArticle from '~/api/articles/getArticle';
+import getAuthor from '~/api/authors/getAuthor';
+
+const route = useRoute();
+const info = ref('');
+const author = ref();
+
+const breadcrumbs = computed(() => {
+  return [{ label: 'Статьи и новости', link: '/blog' }, { label: `${info.value.data?.attributes.name}` }];
+});
 
 const isNews = ref(false);
 
 const setType = (value) => {
   isNews.value = value;
 };
+
+onMounted(() => {
+  setTimeout(async () => {
+    info.value = await getArticle(route.query.id, { include: 'author,media' });
+    author.value = await getAuthor(info.value.data.relationships.author.data.id, { include: 'media' });
+  });
+});
 
 const articles = [
   {
@@ -112,7 +129,7 @@ const news = [
     display: grid;
     grid-template-columns: 1fr;
     @media (min-width: 1280px) {
-      grid-template-columns: 4fr 1fr;
+      //grid-template-columns: 4fr 1fr;
       gap: to-rem(50);
     }
   }

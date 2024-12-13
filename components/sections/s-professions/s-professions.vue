@@ -4,14 +4,14 @@
       <h2 class="s-professions__title" :class="'title-' + titleSize">{{ title }}</h2>
       <div class="s-professions__box">
         <div class="s-professions__wrapper right-border-carousel">
-          <swiper v-bind="swiperConfig" class="mySwiper">
+          <swiper test-id="list-s-professions" v-bind="swiperConfig" class="mySwiper">
             <swiper-slide v-for="(profession, index) in professions" :key="index">
               <m-professions-card :professions="profession" :type="type" />
             </swiper-slide>
           </swiper>
         </div>
         <div class="s-professions-swiper-pagination s-swiper-pagination"></div>
-        <div class="s-professions-swiper-navigation s-swiper-navigation">
+        <div class="s-professions-swiper-navigation s-swiper-navigation" test-id="btn-slider-s-professions-prev">
           <div ref="sliderPrev" class="swiper-button-prev">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
               <path
@@ -20,7 +20,7 @@
               />
             </svg>
           </div>
-          <div ref="sliderNext" class="swiper-button-next">
+          <div ref="sliderNext" class="swiper-button-next" test-id="btn-slider-s-professions-next">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="12" viewBox="0 0 20 12" fill="none">
               <path
                 d="M19.2667 4.25831L16.0417 0.999978C15.9642 0.921871 15.872 0.859875 15.7705 0.817568C15.6689 0.775261 15.56 0.753479 15.45 0.753479C15.34 0.753479 15.2311 0.775261 15.1295 0.817568C15.028 0.859875 14.9358 0.921871 14.8583 0.999978C14.7031 1.15611 14.616 1.36732 14.616 1.58748C14.616 1.80763 14.7031 2.01884 14.8583 2.17498L17.825 5.16664H0.833333C0.61232 5.16664 0.400358 5.25444 0.244078 5.41072C0.0877974 5.567 0 5.77896 0 5.99998C0 6.22099 0.0877974 6.43295 0.244078 6.58923C0.400358 6.74551 0.61232 6.83331 0.833333 6.83331H17.875L14.8583 9.84165C14.7802 9.91911 14.7182 10.0113 14.6759 10.1128C14.6336 10.2144 14.6118 10.3233 14.6118 10.4333C14.6118 10.5433 14.6336 10.6522 14.6759 10.7538C14.7182 10.8553 14.7802 10.9475 14.8583 11.025C14.9358 11.1031 15.028 11.1651 15.1295 11.2074C15.2311 11.2497 15.34 11.2715 15.45 11.2715C15.56 11.2715 15.6689 11.2497 15.7705 11.2074C15.872 11.1651 15.9642 11.1031 16.0417 11.025L19.2667 7.79164C19.7348 7.32289 19.9978 6.68748 19.9978 6.02498C19.9978 5.36248 19.7348 4.72706 19.2667 4.25831Z"
@@ -31,9 +31,15 @@
         </div>
       </div>
       <div class="f-btn-college">
-        <NuxtLink v-if="needBtn" :to="`/professions` + (selectedCityOptionSlug ? '/' + selectedCityOptionSlug : '')">
-          <a-button label="Все профессии" color="violet-5" size="medium" textSize="f-text-s" />
-        </NuxtLink>
+        <a-button
+          v-if="needBtn"
+          label="Все профессии"
+          color="violet-5"
+          size="medium"
+          textSize="f-text-s"
+          test-id="btn-s-professions-all"
+          @click="() => emitNavigateToProfession(selectedCityOptionSlug)"
+        />
       </div>
     </div>
   </section>
@@ -50,6 +56,9 @@ const props = defineProps({
   type: { type: String, default: 'profession' },
   apiProfessions: { type: Object, default: () => ({}) },
 });
+
+const emit = defineEmits(['navigateTo']);
+
 const cityStore = useCityIdStore();
 const selectedCityOptionSlug = computed(() => cityStore.$state.selectedOptionSlug);
 const professions = ref([]);
@@ -94,14 +103,19 @@ async function fetchData() {
   }
 }
 
+function emitNavigateToProfession() {
+  const url = '/professions';
+  emit('navigateTo', url);
+}
+
 onMounted(() => {
-  onMounted(fetchData);
+  fetchData();
 });
 
 watch(
   () => props.apiProfessions,
   (newVal, oldVal) => {
-    if (newVal !== oldVal) {
+    if (JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
       fetchData();
     }
   },

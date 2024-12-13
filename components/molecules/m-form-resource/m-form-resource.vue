@@ -2,10 +2,10 @@
   <div class="m-form-resource">
     <a
       v-for="(link, index) in links"
+      v-show="isVisible(link.alt)"
       :key="index"
       class="m-form-resource__link"
       :href="link.href"
-      v-show="isVisible(link.alt)"
       @click.prevent="handleIconClick(link.alt)"
     >
       <img :src="link.icon" loading="lazy" :alt="link.alt" />

@@ -1,18 +1,25 @@
 <template>
-  <NuxtLink :to="last ? '/colleges' : `/college/${colleges.id}`" class="m-colleges-card" :class="{ last: last }">
+  <NuxtLink :to="last ? '/colleges' : `/college/${options.id}`" class="m-colleges-card" :class="{ last: last }">
     <div v-if="!last" class="m-colleges-card__img">
-      <img :src="colleges.logo" loading="lazy" alt="" class="" />
+      <img :src="logo" loading="lazy" alt="" class="" />
     </div>
     <div class="m-colleges-card__text">
-      <p class="f-text-s f-font-700">{{ colleges.name }}</p>
+      <p class="f-text-s f-font-700">{{ options.attributes?.name }}</p>
       <p v-if="last" class="f-text-m">Посмотреть все колледжи</p>
     </div>
   </NuxtLink>
 </template>
 
 <script setup>
-defineProps({
-  colleges: {
+import { getIncludeData } from '~/composables/getIncludeData';
+import { getLogo } from '~/composables/getLogo';
+
+const props = defineProps({
+  options: {
+    type: Object,
+    default: () => ({}),
+  },
+  included: {
     type: Object,
     default: () => ({}),
   },
@@ -24,6 +31,10 @@ defineProps({
     type: String,
     default: '/',
   },
+});
+
+const logo = computed(() => {
+  return getLogo(getIncludeData(props.options, props.included, 'media'));
 });
 </script>
 

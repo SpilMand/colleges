@@ -8,14 +8,24 @@ import change from '~/api/auth/change';
 import forgotPassword from '~/api/auth/forgot';
 import resetPassword from '~/api/auth/reset';
 import me from '~/api/auth/me';
+import getUser from '~/api/users/getUser';
 
 export const useAuthStore = defineStore({
   id: 'auth-store',
   state: () => ({
-    access_token: localStorage.getItem('access_token') || null,
+    access_token: Date.now() < localStorage.getItem('expires_time') ? localStorage.getItem('access_token') : null,
     reg_token: null,
     tokenRefreshTimer: null,
-    user: { first_name: localStorage.getItem('first_name') || null },
+    user: { id: localStorage.getItem('user_id'), first_name: localStorage.getItem('first_name') || null },
+    popupAuthShow: false,
+    // eslint-disable-next-line max-len
+    questionLikesId: localStorage.getItem('question_likes')
+      ? Object.values(JSON.parse(localStorage.getItem('question_likes')))
+      : [],
+    // eslint-disable-next-line max-len
+    questionDislikesId: localStorage.getItem('question_dislikes')
+      ? Object.values(JSON.parse(localStorage.getItem('question_dislikes')))
+      : [],
   }),
 
   getters: {
@@ -25,6 +35,10 @@ export const useAuthStore = defineStore({
   },
 
   actions: {
+    setPopupAuthShow(state) {
+      this.popupAuthShow = state;
+    },
+
     setAccessToken(token) {
       this.access_token = token;
       localStorage.setItem('access_token', token);
@@ -37,7 +51,9 @@ export const useAuthStore = defineStore({
     reset() {
       this.access_token = null;
       this.user.first_name = null;
+      this.user.id = null;
       localStorage.removeItem('first_name');
+      localStorage.removeItem('user_id');
       localStorage.removeItem('access_token');
       if (this.tokenRefreshTimer) {
         clearTimeout(this.tokenRefreshTimer);
@@ -54,9 +70,43 @@ export const useAuthStore = defineStore({
       localStorage.setItem('first_name', firstName);
     },
 
+    setUserId(id) {
+      this.user.id = id;
+      localStorage.setItem('user_id', id);
+    },
+
     setUser(userData) {
       this.user = userData;
       this.setFirstName(userData.first_name);
+      this.setUserId(userData.id);
+    },
+
+    getQuestionLikesId(userData) {
+      this.questionLikesId = Object.values(userData.included).map((element) => element.id);
+      localStorage.setItem('question_likes', JSON.stringify(this.questionLikesId));
+    },
+    getQuestionDislikesId(userData) {
+      this.questionDislikesId = Object.values(userData.included).map((element) => element.id);
+      localStorage.setItem('question_dislikes', JSON.stringify(this.questionDislikesId));
+    },
+
+    switchQuestionLike(id) {
+      const index = this.questionLikesId.indexOf(id);
+      if (index !== -1) {
+        this.questionLikesId.splice(index);
+      } else {
+        this.questionLikesId.push(id);
+      }
+      localStorage.setItem('question_likes', JSON.stringify(this.questionLikesId));
+    },
+    switchQuestionDislike(id) {
+      const index = this.questionDislikesId.indexOf(id);
+      if (index !== -1) {
+        this.questionDislikesId.splice(index);
+      } else {
+        this.questionDislikesId.push(id);
+      }
+      localStorage.setItem('question_dislikes', JSON.stringify(this.questionDislikesId));
     },
 
     async login(opts) {
@@ -64,7 +114,19 @@ export const useAuthStore = defineStore({
         const response = await login(opts);
         if (response && response.access_token) {
           this.setAccessToken(response.access_token);
+          localStorage.setItem('expires_time', Date.now() + response.expires_in * 1000);
           const userData = await me(response.access_token);
+          const userDataWithLikes = await getUser(userData.id, response.access_token, { include: 'likeQuestions' });
+          if (userDataWithLikes.included) {
+            this.getQuestionLikesId(userDataWithLikes);
+          }
+          const userDataWithDislikes = await getUser(userData.id, response.access_token, {
+            include: 'dislikeQuestions',
+          });
+          if (userDataWithDislikes.included) {
+            this.getQuestionDislikesId(userDataWithDislikes);
+          }
+
           this.setUser(userData);
           if (response.expires_in > 0) {
             this.startTokenRefreshTimer(response.expires_in);
@@ -109,7 +171,6 @@ export const useAuthStore = defineStore({
 
     async change(opts) {
       try {
-        console.log('opts', opts);
         await change(opts, this.reg_token);
       } catch (error) {
         throw new Error('Такая почта уже существует');
@@ -133,6 +194,10 @@ export const useAuthStore = defineStore({
       try {
         if (this.access_token) {
           await logout(this.access_token);
+          this.questionLikesId = [];
+          localStorage.setItem('question_likes', JSON.stringify(this.questionLikesId));
+          this.questionDislikesId = [];
+          localStorage.setItem('question_dislikes', JSON.stringify(this.questionDislikesId));
           this.reset();
         } else {
           throw new Error('No access token to logout');
@@ -151,7 +216,6 @@ export const useAuthStore = defineStore({
       // Устанавливаем таймер на 10 секунд до истечения срока действия токена, если expiresIn меньше 600
       const refreshTime = expiresIn > 600 ? (expiresIn - 600) * 1000 : 0;
       if (refreshTime > 0) {
-        console.log(`Установка таймера обновления токена на ${refreshTime} миллисекунд`);
         this.tokenRefreshTimer = setTimeout(() => {
           this.refresh();
         }, refreshTime);

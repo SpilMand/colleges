@@ -1,6 +1,6 @@
 <template>
   <div class="gallery">
-    <h3 class="title-h3">Фото колледжа</h3>
+    <h3 class="title-h3">{{ pageTitle }}</h3>
     <div v-if="photos.length > 1" class="gallery__content section-m">
       <div v-for="(photo, index) in photos" :key="index" class="gallery__photo" @click="openPhoto(index)">
         <img :src="photo.attributes.url" alt="" />
@@ -14,7 +14,7 @@
       :curPage="curPage"
       @updateCurPage="updateCurPage"
     /> -->
-    <s-upload-photo class="section-m" />
+    <s-upload-photo v-if="authStore.isAuthenticated" class="section-m" />
     <m-popup :visible="isPopup" class="gallery__popup" @close="isPopup = false">
       <div class="gallery__popup-inner swiper-default">
         <div ref="sliderPrev" class="swiper-button-prev">
@@ -49,13 +49,18 @@
 <script setup>
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Pagination, Navigation } from 'swiper/modules';
-import { ref } from 'vue';
 import { getIncludeData } from '~/composables/getIncludeData';
+import { useAuthStore } from '~/store/useAuthStore';
+import useCanonicalHead from '~/composables/useCanonicalHead';
+
+useCanonicalHead();
 
 const props = defineProps({
   info: { type: Object, default: () => ({}) },
   included: { type: Object, default: () => ({}) },
 });
+
+const authStore = useAuthStore();
 
 const photos = computed(() => {
   let arr = getIncludeData(props.info, props.included, 'galleries');
@@ -65,8 +70,19 @@ const photos = computed(() => {
 
 definePageMeta({
   layout: 'layout-college',
+  validate() {
+    return false;
+  },
 });
 const emit = defineEmits(['blocksNeed', 'isQuestionSet']);
+
+const pageTitle = ref('Фото колледжа');
+
+useHead({
+  title: `${pageTitle.value} | Колледжи.рф`,
+  // eslint-disable-next-line max-len
+  description: `${pageTitle.value}. Лучший сайт для абитуриентов колледжей. Помогаем с подбором профессии, сравнением колледжей, подсчетом баллов ЕГЭ и ОГЭ. Начните путь к успешной карьере с нами!`,
+});
 
 onMounted(() => {
   emit('blocksNeed', false, false, false);

@@ -9,7 +9,8 @@
         :step="step"
         :value="curMin"
         :placeholder="min"
-        @input="emit('setCost', 'min_cost', $event.target.value)"
+        :test-id="`input-a-double-${sectionId}slider-min-numbers`"
+        @input="setCost('min_cost', $event)"
       />
       <input
         v-model="sliderMax"
@@ -19,7 +20,8 @@
         :step="step"
         :value="curMax"
         :placeholder="max"
-        @input="emit('setCost', 'max_cost', $event.target.value)"
+        :test-id="`input-a-double-slider-${sectionId}-max-numbers`"
+        @input="setCost('max_cost', $event)"
       />
     </div>
     <div class="a-double-slider__range">
@@ -30,7 +32,8 @@
         :max="max"
         :step="step"
         :value="curMin"
-        @mouseup="emit('setCost', 'min_cost', $event.target.value)"
+        :test-id="`input-a-double-slider-${sectionId}-min-range`"
+        @mouseup="setCost('min_cost', $event)"
       />
       <input
         v-model="sliderMax"
@@ -39,23 +42,33 @@
         :max="max"
         :step="step"
         :value="curMax"
-        @mouseup="emit('setCost', 'max_cost', $event.target.value)"
+        :test-id="`input-a-double-slider-${sectionId}-max-range`"
+        @mouseup="setCost('max_cost', $event)"
       />
     </div>
   </div>
 </template>
 
 <script setup>
-// import { ref } from 'vue';
 const props = defineProps({
   min: { type: Number, default: 0 },
   max: { type: Number, default: 0 },
   step: { type: Number, default: 1 },
   // curMin: { type: Number, default: 0 },
   // curMax: { type: Number, default: 0 }
+  sectionId: { type: String, default: '' },
 });
 
 const emit = defineEmits(['setCost']);
+
+onMounted(() => {
+  if (localStorage.getItem('curMin')) {
+    curMin.value = JSON.parse(localStorage.getItem('curMin'));
+  }
+  if (localStorage.getItem('curMax')) {
+    curMax.value = JSON.parse(localStorage.getItem('curMax'));
+  }
+});
 
 const curMin = ref(props.min);
 const curMax = ref(props.max);
@@ -71,6 +84,7 @@ const sliderMin = computed({
       curMax.value = val;
     }
     curMin.value = val;
+    localStorage.setItem('curMin', curMin.value);
   },
 });
 const sliderMax = computed({
@@ -84,13 +98,19 @@ const sliderMax = computed({
       curMin.value = val;
     }
     curMax.value = val;
+    localStorage.setItem('curMax', curMax.value);
   },
 });
 
-watch(props, () => {
-  sliderMin.value = 0;
-  sliderMax.value = props.max;
-});
+const setCost = (key, event) => {
+  // event.stopPropagation();
+  emit('setCost', key, event.target.value);
+};
+
+// watch(props, () => {
+//   sliderMin.value = 0;
+//   sliderMax.value = props.max;
+// });
 </script>
 
 <style>

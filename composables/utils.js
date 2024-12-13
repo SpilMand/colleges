@@ -23,3 +23,26 @@ export function getTitle(apiData, entityType) {
   }
   return entityType;
 }
+
+export function validDate(str) {
+  const date = new Date(str);
+  const months = [
+    'январь',
+    'февраль',
+    'март',
+    'апрель',
+    'май',
+    'июнь',
+    'июль',
+    'август',
+    'сентябрь',
+    'октябрь',
+    'ноябрь',
+    'декабрь',
+  ];
+  const dateNum = date.getDate();
+  const month = date.getMonth();
+  const year = date.getFullYear();
+
+  return [dateNum, months[month], year].join(' ');
+}

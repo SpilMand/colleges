@@ -58,16 +58,25 @@
     <nav class="s-profession-head__nav">
       <div class="container">
         <ul v-if="page == 'profession'" class="f-text-m">
-          <NuxtLink :to="`/professions/${professionId}`">
+          <NuxtLink :to="`/profession/${professionId}`" :test-id="`link-s-profession-head-${professionId}`">
             <li>Колледжи</li>
           </NuxtLink>
-          <NuxtLink :to="`/professions/${professionId}/specialties`">
+          <NuxtLink
+            :to="`/profession/${professionId}/specialties`"
+            :test-id="`link-s-profession-head-${professionId}-specialties`"
+          >
             <li>Специальности</li>
           </NuxtLink>
         </ul>
         <ul v-else class="f-text-m">
-          <NuxtLink :to="`/specialties/${professionId}`"><li>Колледжи</li></NuxtLink>
-          <NuxtLink :to="`/specialties/${professionId}/professions`"><li>Профессии</li></NuxtLink>
+          <NuxtLink :to="`/specialty/${professionId}`" :test-id="`link-s-profession-head-${professionId}-colleges`"
+            ><li>Колледжи</li></NuxtLink
+          >
+          <NuxtLink
+            :to="`/specialty/${professionId}/professions`"
+            :test-id="`link-s-profession-head-${professionId}-professions`"
+            ><li>Профессии</li></NuxtLink
+          >
         </ul>
       </div>
     </nav>
@@ -90,7 +99,8 @@ const breadcrumbs = computed(() => {
   } else {
     value = [
       { label: 'Профессии', link: '/professions' },
-      { label: props.info?.data?.attributes?.name.split('профессия ')[1] },
+      { label: props.info?.data?.attributes?.name },
+      // { label: props.info?.data?.attributes?.name.split('профессия ')[1] },
     ];
   }
   return value;
@@ -113,6 +123,12 @@ const duration = computed(() => {
       break;
   }
   return `${yearsText} ${months} мес.`;
+});
+
+onMounted(async () => {
+  // setTimeout(() => {
+  //   updateCurPage(0);
+  // });
 });
 </script>
 

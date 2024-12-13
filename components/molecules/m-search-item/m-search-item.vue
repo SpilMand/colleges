@@ -27,8 +27,6 @@ const props = defineProps({
   },
 });
 
-console.log('props.items', props.items);
-
 const showAllItems = ref(false);
 
 const toggleShowAllItems = () => {

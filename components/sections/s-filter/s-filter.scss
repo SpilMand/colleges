@@ -15,18 +15,10 @@
     gap: to-rem(16);
     justify-content: space-between;
     align-items: flex-start;
-    text-transform: lowercase;
-
-    &-city {
-      text-transform: capitalize;
-    }
-
-    .capitalize {
-      text-transform: none;
-    }
 
     h3 {
       max-width: 100%;
+      text-transform: none;
 
       // &::first-letter {
       //   text-transform: uppercase;
@@ -199,7 +191,11 @@
 
       .a-button {
         width: 100%;
-        max-width: to-rem(460);
+        max-width: 100%;
+
+        @media (min-width: 768px) {
+          max-width: to-rem(270);
+        }
       }
 
       &-sub {

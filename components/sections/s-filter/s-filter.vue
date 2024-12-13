@@ -9,9 +9,15 @@
           /></span>
           <span v-if="typeMc && forPage === 'professions'" class="s-filter__title-type">{{ typeMc }}&nbsp;</span>
           <span v-if="directionTitle" :class="{ capitalize: !typeMc }">{{ directionTitle }}</span>
-          <span v-else-if="forPage === 'colleges'" :class="{ capitalize: !typeMc }">Колледжи и техникумы</span>
-          <span v-else-if="forPage === 'professions'" :class="{ capitalize: !typeMc }">Профессии колледжей</span>
-          <span v-else-if="forPage === 'specialties'" :class="{ capitalize: !typeMc }">Специальности</span>
+          <span v-else-if="forPage === 'colleges'" :class="{ capitalize: !typeMc }">
+            {{ pageTitle || 'Колледжи и техникумы' }}
+          </span>
+          <span v-else-if="forPage === 'professions'" :class="{ capitalize: !typeMc }">
+            {{ pageTitle || 'Профессии колледжей' }}
+          </span>
+          <span v-else-if="forPage === 'specialties'" :class="{ capitalize: !typeMc }">
+            {{ pageTitle || 'Специальности' }}
+          </span>
           <span class="s-filter__title-city">&nbsp;{{ cityRp || 'России' }}</span>
           {{ formTitle }}
           {{ baseTitle }}
@@ -21,7 +27,12 @@
         </span>
         <span v-else v-html="title" />
       </h3>
-      <a v-if="isMainFilter && forPage !== 'professions'" href="#form" class="s-filter__help scroll">
+      <a
+        v-if="isMainFilter && forPage !== 'professions'"
+        href="#form"
+        class="s-filter__help scroll"
+        test-id="link-s-filters-form"
+      >
         <svg width="270" height="96" viewBox="0 0 270 96" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             fill-rule="evenodd"
@@ -36,7 +47,12 @@
         </svg>
         <p class="f-text-l f-font-700" v-html="'Поможем выбрать<br />правильный колледж'"></p>
       </a>
-      <a v-if="isMainFilter && forPage === 'professions'" href="#form" class="s-filter__help scroll">
+      <a
+        v-if="isMainFilter && forPage === 'professions'"
+        href="#form"
+        class="s-filter__help scroll"
+        test-id="link-s-filters-form-professions"
+      >
         <svg width="270" height="96" viewBox="0 0 270 96" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             fill-rule="evenodd"
@@ -62,6 +78,7 @@
       :img="arrowDown"
       color="violet-5"
       :needRot="true"
+      test-id="btn-s-filters-dropdown"
       @click="openFilters = !openFilters"
     />
     <div v-if="openFilters || width > 768" class="s-filter__filters">
@@ -72,6 +89,8 @@
           placeholder="Любой"
           :options="cities?.data"
           hint="Город"
+          test-id="select-s-filters-cities"
+          section-id="s-filters"
           @addFilter="addFilter"
           @filter="filterCities"
           @get-data="filterSeo"
@@ -82,6 +101,8 @@
           placeholder="Любая"
           :options="eduBase"
           hint="База обучения"
+          test-id="select-s-filters-bases"
+          section-id="s-filters"
           @addFilter="addFilter"
           @get-data="filterSeo"
         />
@@ -91,6 +112,8 @@
           placeholder="Любой"
           :options="typeOfCollege"
           hint="Вид колледжа"
+          test-id="select-s-filters-types"
+          section-id="s-filters"
           @addFilter="addFilter"
           @get-data="filterSeo"
         />
@@ -100,6 +123,8 @@
           placeholder="Любое"
           :options="directions?.data"
           hint="Направление"
+          test-id="select-s-filters-directions"
+          section-id="s-filters"
           @addFilter="addFilter"
           @filter="filterDirections"
           @get-data="filterSeo"
@@ -110,6 +135,8 @@
           placeholder="Любые"
           :options="conditions"
           hint="Условия"
+          test-id="select-s-filters-conditions"
+          section-id="s-filters"
           @addFilter="addFilter"
           @get-data="filterSeo"
         />
@@ -119,29 +146,33 @@
           placeholder="Любая"
           :options="eduForm.data"
           hint="Форма обучения"
+          test-id="select-s-filters-forms"
+          section-id="s-filters"
           @addFilter="addFilter"
           @get-data="filterSeo"
         />
-        <a-select
+        <!-- фильтр выбор колледжа !-->
+        <!-- <a-select
           v-if="forPage == 'profession'"
           placeholder="Любой"
           param="college"
           :options="colleges.data"
           hint="Колледж"
-          :multiple="true"
           @get-data="filterSeo"
           @addFilter="addFilter"
-        />
+        /> -->
         <a-select
           v-if="forPage == 'professions'"
           param="relevance"
           placeholder="Любая"
           :options="profRelevance"
-          hint="Актуальность"
+          hint="Актуальность!"
+          test-id="select-s-filters-relevance"
+          section-id="s-filters"
           @addFilter="addFilter"
           @get-data="filterSeo"
         />
-        <a-select
+        <!-- <a-select
           v-if="forPage == 'professions'"
           param="works"
           placeholder="Любая"
@@ -149,24 +180,32 @@
           hint="сфера работы"
           @addFilter="addFilter"
           @get-data="filterSeo"
-        />
+        /> -->
         <a-select
           v-if="forPage == 'professions'"
           param="bases"
           placeholder="Любая"
           :options="eduBase"
           hint="База обучения"
+          test-id="select-s-filters-bases-professions"
+          section-id="s-filters"
           @addFilter="addFilter"
           @get-data="filterSeo"
         />
         <div v-if="showSub" class="s-filter__filters-dormitory">
           <img src="/icons/dormitory.svg" alt="" />
           <label for="dormitory" class="f-text-s">Общежитие</label>
-          <input id="dormitory" v-model="isDormitory" type="checkbox" @click="filterByDormitory()" />
+          <input
+            id="dormitory"
+            v-model="isDormitory"
+            type="checkbox"
+            test-id="input-s-filters-checkbox-dormitory"
+            @click="filterByDormitory()"
+          />
         </div>
         <div v-if="showSub || forPage == 'specialties' || forPage == 'professions'" class="s-filter__filters-cost gray">
           <span class="s-filter__filters-hint">Стоимость в год</span>
-          <a-double-slider :min="0" :max="maxCost" @setCost="setCost" />
+          <a-double-slider :min="0" :max="maxCost" section-id="s-filter" @setCost="setCost" />
         </div>
       </div>
       <div
@@ -188,6 +227,7 @@
           textSize="f-text-s"
           textWeight="700"
           :needRot="true"
+          test-id="btn-s-filters-dropdown-colleges"
           @click="showSub = !showSub"
         />
         <a-button
@@ -199,6 +239,7 @@
           size="extra-large"
           textSize="f-text-s"
           textWeight="700"
+          test-id="btn-s-filters-open-map"
           @click="emit('openMap')"
         />
         <a-button
@@ -210,6 +251,7 @@
           textWeight="700"
           size="extra-large"
           :style="forPage == 'specialties' ? 'margin-left: auto' : ''"
+          test-id="btn-s-filters-clear"
           @click="deleteActiveFilter('all')"
         />
       </div>
@@ -221,8 +263,10 @@
         textSize="f-text-s"
         textWeight="700"
         size="extra-large"
+        test-id="btn-s-filters-apply"
         @click="emit('searchOnMap', filtersForSearch)"
       />
+      {{ activeFilters }}
       <div v-if="Object.keys(activeFilters).length > 0" class="s-filter__active-filters">
         <div
           v-for="filter in Object.keys(activeFilters).length"
@@ -236,8 +280,8 @@
     </div>
   </section>
 </template>
+
 <script setup>
-import { ref } from 'vue';
 import getCities from '~/api/cities/getCities.js';
 import getDirections from '~/api/directions/getDirections.js';
 import getForms from '~/api/forms/getForms.js';
@@ -276,6 +320,7 @@ watch(width, () => {
 
 const props = defineProps({
   title: { type: String, default: '' },
+  pageTitle: { type: String, default: '' },
   breadcrumbs: { type: Array, default: () => [] },
   forPage: { type: String, default: '' },
   isMainFilter: { type: Boolean, default: true },
@@ -299,18 +344,19 @@ const emit = defineEmits([
   'searchOnMap',
   'filter-seo',
   'clear-seo',
-  'setBreadcrumbs'
+  'setBreadcrumbs',
+  'speciality',
 ]);
 
 const breadcrumbsClick = (index) => {
   const length = Object.keys(activeFilters.value).length;
-  for(let i = 0; i < length; i++) {
+  for (let i = 0; i < length; i++) {
     if (i >= index) {
       deleteActiveFilter(Object.keys(activeFilters.value)[index]);
     }
   }
   emit('setBreadcrumbs', activeFilters.value);
-}
+};
 
 const openFilters = ref(false);
 
@@ -338,12 +384,12 @@ const conditions = ref([
 
 const eduForm = await getForms();
 
-const profWork = ref([{ attributes: { value: '9', name: 'Дизайн' } }, { attributes: { value: '10', name: 'ИТ' } }]);
+// const profWork = ref([{ attributes: { value: '9', name: 'Дизайн' } }, { attributes: { value: '10', name: 'ИТ' } }]);
 
 const profRelevance = ref([
   { attributes: { value: true, id: 'is_future', name: 'Профессия будущего' } },
   { attributes: { value: true, id: 'is_perspective', name: 'Перспективная' } },
-  { attributes: { value: true, id: 'is_now', name: 'Востребованная сейчас' } },
+  { attributes: { value: true, id: 'is_favorite', name: 'Актуально сейчас' } },
   { attributes: { value: true, id: 'is_old', name: 'Устаревающая' } },
 ]);
 
@@ -396,7 +442,7 @@ const relevanceTitle = ref('');
 
 const filterByDormitory = () => {
   isDormitory.value = !isDormitory.value;
-  if (isDormitory.value == true) {
+  if (isDormitory.value === true) {
     filtersForSearch.value.is_hostel = true;
   } else {
     delete filtersForSearch.value.is_hostel;
@@ -464,7 +510,7 @@ const setCost = (key, value) => {
 };
 const deleteActiveFilter = (index) => {
   let inputs = document.querySelectorAll('.a-select__label');
-  if (index != 'all') {
+  if (index !== 'all') {
     for (let inp of inputs) {
       if (activeFilters.value[index].attributes.name == inp.value) {
         inp.value = '';

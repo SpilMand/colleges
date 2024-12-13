@@ -5,7 +5,7 @@
       <div class="s-errors-404__wrapper">
         <div class="s-errors-404__content">
           <h1 class="s-errors-404__title title-h3 mbx8">Страницы, что вы ищите, не существует!</h1>
-          <div v-if="width <= 767" class="s-errors-404__img mbx8">
+          <div v-if="width < 768" class="s-errors-404__img mbx8">
             <img src="/img/error/404.svg" alt="Страницы, что вы ищите, не существует!" />
           </div>
           <p class="f-text-l mbx5 f-font-700">
@@ -22,26 +22,31 @@
             и предлагаем следующие пути решения:
           </p>
           <div class="s-errors-404__button mbx10">
-            <nuxt-link to="/">
-              <a-button label="На главную" color="orange" size="extra-large" textSize="f-text-m" class="f-font-700" />
-            </nuxt-link>
-            <nuxt-link to="/">
-              <a-button
-                label="Вернуться назад"
-                color="outline"
-                size="extra-large"
-                textSize="f-text-m"
-                class="f-font-700"
-              />
-            </nuxt-link>
+            <a-button
+              label="На главную"
+              color="orange"
+              size="extra-large"
+              textSize="f-text-m"
+              class="f-font-700"
+              test-id="btn-404-main"
+              @click="navigateTo('/')"
+            />
+            <a-button
+              label="Вернуться назад"
+              color="outline"
+              size="extra-large"
+              textSize="f-text-m"
+              class="f-font-700"
+              test-id="btn-404-back"
+            />
           </div>
           <div class="s-errors-404__info f-text-m">
             Если вы уверены в правильности набранного адреса страницы и считаете, что эта ошибка произошла по нашей
             вине, пожалуйста, сообщите нам об этом при помощи электронной почты
-            <a class="f-link" href="mailto:support@college.ru">support@college.ru</a>
+            <a class="f-link" href="mailto:support@college.ru" test-id="link-404-email">support@college.ru</a>
           </div>
         </div>
-        <div v-if="width > 767" class="s-errors-404__img">
+        <div v-if="width >= 768" class="s-errors-404__img">
           <img src="/img/error/404.svg" alt="Страницы, что вы ищите, не существует!" />
         </div>
       </div>

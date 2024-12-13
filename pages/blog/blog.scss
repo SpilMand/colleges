@@ -103,4 +103,30 @@
       }
     }
   }
+
+  &-articles__nav {
+    &-item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: var(--a-padding-x2) var(--a-padding-x4);
+      border-right: to-rem(1) solid var(--color-violet-80);
+      text-align: center;
+
+      &:last-of-type {
+        border: none;
+      }
+      @media (min-width: 768px) {
+        height: 100%;
+      }
+      @media (min-width: 1280px) {
+        padding: var(--a-padding-x3) var(--a-padding-x19);
+      }
+
+      &.router-link-active {
+        color: var(--color-white);
+        background-color: var(--color-violet-80);
+      }
+    }
+  }
 }

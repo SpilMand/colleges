@@ -4,11 +4,10 @@ import { useLanderStore } from '~/store/lander';
 const pinia = createPinia();
 const landerStore = useLanderStore(pinia);
 
-let formName = '';
+// let formName = '';
 landerStore.getLanderInfo();
 
 export default defineNuxtPlugin(() => {
-  const config = useRuntimeConfig();
   // const metrika = useNuxtApp().$metrika;
 
   // Объект набора валидаторов
@@ -88,20 +87,20 @@ export default defineNuxtPlugin(() => {
   function getConfig(unit, type, land, partner, version, utms) {
     let url = '';
     // Код для отбивочного письма
-    let enkod = config.public.enkod;
+    // let enkod = config.public.enkod;
 
     if (landerStore.landerSettings) {
       // Письмо отправляется со всех форм кроме формы для партнеров
       // eslint-disable-next-line max-len
-      if (formName !== 'partnersform') {
-        url = `https://syn.su/lander.php?r=land/index&unit=${unit}&partner=${partner}&version=${version}${
-          type ? `&type=${type}` : ''
-        }&land=${land}&ignore-thanksall=1&enkod_send_template_id=${enkod}`;
-      } else {
-        url = `https://syn.su/lander.php?r=land/index&unit=${unit}&partner=${partner}&version=${version}${
-          type ? `&type=${type}` : ''
-        }&land=${land}&ignore-thanksall=1`;
-      }
+      // if (formName !== 'partnersform') {
+      //   url = `https://syn.su/lander.php?r=land/index&unit=${unit}&partner=${partner}&version=${version}${
+      //     type ? `&type=${type}` : ''
+      //   }&land=${land}&ignore-thanksall=1`;
+      // } else {
+      url = `https://syn.su/lander.php?r=land/index&unit=${unit}&partner=${partner}&version=${version}${
+        type ? `&type=${type}` : ''
+      }&land=${land}&ignore-thanksall=1`;
+      // }
 
       // Если есть utm метки, то передаем их в урл
       if (Object.keys(utms).length) {
@@ -203,7 +202,7 @@ export default defineNuxtPlugin(() => {
         })
         .catch((error) => {
           reject(error);
-          console.log('Ошибка: ', error);
+          console.error(error);
         });
     });
   }

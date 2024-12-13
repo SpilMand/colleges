@@ -1,7 +1,7 @@
 <template>
   <div id="s-advertiser" class="s-advertiser section-l">
     <div class="container">
-      <h1 class="title-h2 s-advertiser__title">Информация о рекламодателе</h1>
+      <h1 class="title-h2 s-advertiser__title">{{ pageTitle }}</h1>
       <div class="s-advertiser__wrapper">
         <div class="s-advertiser__head">
           <div class="s-advertiser__logo">
@@ -41,6 +41,13 @@
 </template>
 <script setup>
 const title = ref('Московский Технологический Институт (МТИ)');
+
+defineProps({
+  pageTitle: {
+    type: String,
+    default: 'Информация о рекламодателе',
+  },
+});
 </script>
 <style>
 @import './s-advertiser.scss';

@@ -4,7 +4,7 @@
     <div class="s-now-read-articles__box">
       <swiper v-bind="swiperConfig" class="mySwiper">
         <swiper-slide v-for="(article, index) in articles" :key="index">
-          <m-articles-card :info="article" />
+          <m-articles-card :info="article" :articles="article" />
         </swiper-slide>
       </swiper>
       <div class="s-now-read-articles-swiper-pagination s-swiper-pagination"></div>
@@ -27,9 +27,14 @@
         </div>
       </div>
       <div class="f-btn-college">
-        <NuxtLink to="/blog/news">
-          <a-button label="Все статьи" color="violet-5" size="medium" textSize="f-text-s" />
-        </NuxtLink>
+        <a-button
+          label="Все статьи"
+          color="violet-5"
+          size="medium"
+          textSize="f-text-s"
+          test-id="link-s-now-read-articles-all"
+          @click="navigateTo('/blog/news')"
+        />
       </div>
     </div>
   </section>

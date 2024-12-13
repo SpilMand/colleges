@@ -6,7 +6,8 @@
     <div class="s-more-articles__box">
       <swiper v-bind="swiperConfig" class="mySwiper">
         <swiper-slide v-for="(article, index) in articles" :key="index">
-          <m-articles-card :isComp="true" :info="article" />
+          <!-- <m-articles-card :isComp="true" :info="article" :articles="article"/> -->
+          <m-articles-card-comp :articles="article" :info="article" :countLabel="`${article?.count_articles} статей`" />
         </swiper-slide>
       </swiper>
       <div class="s-more-articles-swiper-pagination s-swiper-pagination"></div>
@@ -29,9 +30,13 @@
         </div>
       </div>
       <div class="f-btn-college">
-        <NuxtLink to="/blog/news">
-          <a-button label="Смотреть все" color="violet-5" size="medium" textSize="f-text-s" />
-        </NuxtLink>
+        <a-button
+          label="Смотреть все"
+          color="violet-5"
+          size="medium"
+          textSize="f-text-s"
+          @click="navigateTo('/blog/news')"
+        />
       </div>
     </div>
   </section>

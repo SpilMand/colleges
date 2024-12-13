@@ -108,6 +108,7 @@
 
     &-param {
       display: flex;
+
       // justify-content: space-between;
       align-items: center;
       @media (min-width: 768px) {
@@ -132,6 +133,7 @@
         padding-right: 0;
         border: none;
       }
+
       &-label {
         margin-right: auto;
       }

@@ -3,13 +3,19 @@
   <nav class="m-menu">
     <ul class="m-menu__list">
       <li v-for="(item, index) in items" :key="index" class="m-menu__item">
-        <NuxtLink v-if="item.name !== 'directions'" class="m-menu__link f-text-s f-font-700" :to="item.link">
+        <NuxtLink
+          v-if="item.name !== 'directions'"
+          class="m-menu__link f-text-s f-font-700"
+          :to="item.link"
+          :test-id="`link-m-menu-anchor-${item.name}`"
+        >
           {{ item.anchor }}
         </NuxtLink>
         <div
           v-else
           :class="{ active: showDirectionsList }"
           class="m-menu__link m-menu__directions f-text-s f-font-700"
+          :test-id="`link-m-menu-anchor-toggle`"
           @click="toggleDirectionsList"
         >
           {{ item.anchor }}
@@ -19,7 +25,12 @@
               fill="#343434"
             />
           </svg>
-          <m-directions-menu v-show="showDirectionsList" :directions="directions" @click.stop />
+          <m-directions-menu
+            v-show="showDirectionsList"
+            :directions="directions"
+            @click.stop
+            @choosedDirection="showDirectionsList = false"
+          />
         </div>
       </li>
     </ul>

@@ -1,17 +1,20 @@
 <template>
-  <s-advantages :info="info" />
-  <s-feedback />
-  <s-popular-professions :collegeId="collegeId" :professions="professions.data" />
+  <!-- <s-advantages :info="info" /> -->
+  <!-- <s-feedback /> -->
+  <s-popular-professions v-if="professions" :collegeId="collegeId" :professions="professions.data" />
   <s-students-count :monitorings="monitorings" />
   <s-average-score :monitorings="monitorings" />
   <s-license :info="info" />
   <s-photo :photos="photos" />
-  <s-questions :questions="questions" />
+  <s-questions v-if="false" :questions="questions" />
 </template>
 
 <script setup>
 import getProfessions from '~/api/professions/getProfessions';
 import { getIncludeData } from '~/composables/getIncludeData';
+import useCanonicalHead from '~/composables/useCanonicalHead';
+
+useCanonicalHead();
 
 const props = defineProps({
   collegeId: { type: Number, default: 0 },
@@ -22,21 +25,34 @@ const props = defineProps({
 const route = useRoute();
 const { id } = route.params;
 
+watch(
+  () => props.info,
+  (val) => {
+    const pageTitle = ref(val.attributes.short_name);
+
+    useHead({
+      title: `${pageTitle.value} | Колледжи.рф`,
+      // eslint-disable-next-line max-len
+      description: `${pageTitle.value}. Лучший сайт для абитуриентов колледжей. Помогаем с подбором профессии, сравнением колледжей, подсчетом баллов ЕГЭ и ОГЭ. Начните путь к успешной карьере с нами!`,
+    });
+  },
+);
+
 definePageMeta({
   layout: 'layout-college',
 });
 
-const professions = ref({});
-watch(props, async () => {
-  setProfessions();
-})
+const professions = await getProfessions({
+  'page[size]': 10,
+  'filter[college_id]': id,
+});
 
 const monitorings = computed(() => {
   return getIncludeData(props.info, props.included, 'monitorings');
 });
 
 const photos = computed(() => {
-  let arr = getIncludeData(props.info, props.included, 'galleries');
+  let arr = getIncludeData(props.info, props.included, 'media');
   arr.pop();
   return arr;
 });
@@ -54,24 +70,16 @@ const questions = ref([
 const emit = defineEmits(['blocksNeed', 'isQuestionSet']);
 
 // временное решение
-onBeforeMount(async () => {
+onBeforeMount(() => {
   if (!/^(\-|\+)?([0-9]+|Infinity)$/.test(id)) {
     navigateTo('/colleges');
   }
 });
 
 onMounted(() => {
-  setProfessions();
   emit('blocksNeed', true, true, false);
   emit('isQuestionSet', false);
 });
-
-const setProfessions = async () => {
-  professions.value = await getProfessions({
-    'page[size]': 10,
-    'filter[college_id]': props.collegeId,
-  });  
-}
 </script>
 
 <style scoped lang="scss">

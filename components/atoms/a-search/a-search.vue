@@ -8,11 +8,18 @@
       name="search"
       type="text"
       :placeholder="placeholder"
+      :test-id="`input-${sectionId}-search`"
     />
-    <button type="submit" class="a-search__icon" @click="toggleSearch"></button>
+    <button
+      type="submit"
+      class="a-search__icon"
+      :test-id="`btn-${sectionId}-search-submit`"
+      @click="toggleSearch"
+    ></button>
     <div
       v-if="
         showDropdown &&
+        // eslint-disable-next-line max-len
         (items.colleges?.length || items.directions?.length || items.specialties?.length || items.professions?.length)
       "
       class="a-search__dropdown"
@@ -27,7 +34,6 @@
   </div>
 </template>
 <script setup>
-import { ref, watch, computed } from 'vue';
 import { useDebounce } from '@vueuse/core';
 import getItems from '~/api/search/getItems';
 
@@ -45,6 +51,10 @@ const props = defineProps({
   textSize: {
     type: String,
     default: 'xs',
+  },
+  sectionId: {
+    type: String,
+    default: '',
   },
 });
 

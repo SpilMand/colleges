@@ -4,8 +4,8 @@
       <div class="m-specialization-card__head">
         <div class="m-specialization-card__accr-info f-text-xs">
           <span class="gray"> {{ oksoInfo.attributes.code_okso }} </span>
-          <span v-if="info.attributes.is_accreditation" class="green">Аккредитована</span>
-          <span v-else class="red">Не аккредитована</span>
+          <!-- <span v-if="info.attributes.is_accreditation" class="green">Аккредитована</span>
+          <span v-else class="red">Не аккредитована</span> -->
         </div>
         <h4 class="title-h4">{{ oksoInfo.attributes.name }}</h4>
         <p class="f-text-s">{{ oksoInfo.attributes.qualification }}</p>
@@ -62,6 +62,12 @@
         textWeight="700"
         :img="arrow"
         :center="false"
+        :test-id="`btn-m-specialization-card-${info.id}`"
+        @click="
+          navigateTo(`
+          /specialty/${info.attributes.okso_specialty_id}/professions/?collegeId=${route.params.id}
+        `)
+        "
       />
     </div>
   </div>
@@ -74,6 +80,8 @@ const props = defineProps({
   info: { type: Object, default: () => ({}) },
   included: { type: Object, default: () => ({}) },
 });
+
+const route = useRoute();
 
 const oksoInfo = computed(() => {
   return getIncludeData(props.info, props.included, 'oksoSpecialty');

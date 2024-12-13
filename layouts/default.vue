@@ -42,7 +42,14 @@ async function fetchData() {
       },
       'main',
     );
-    apiDirections.value = await getDirections(cityIdFilter, 'main');
+    apiDirections.value = await getDirections(
+      {
+        'page[size]': 100,
+        'include': 'media',
+        ...cityIdFilter,
+      },
+      'main',
+    );
     apiSpecialties.value = await getOksos(
       {
         'filter[hasSpecialties]': true,
@@ -52,7 +59,7 @@ async function fetchData() {
     );
     apiProfessions.value = await getProfessions(
       {
-        'filter[specialties]': true,
+        // 'filter[specialties]': true,
         ...cityIdFilter,
       },
       'main',

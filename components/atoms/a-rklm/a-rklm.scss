@@ -1,10 +1,13 @@
 .a-rklm {
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   height: to-rem(200);
   border: to-rem(1) solid var(--color-violet-10);
   border-radius: var(--border-radius-x5);
+  @media (min-width: 1500px) {
+    display: flex;
+  }
 
   &:hover {
     border-color: var(--color-violet-60);

@@ -3,16 +3,30 @@
   <s-college-head :info="info.data" :included="info.included" :collegeId="route.params.id" />
   <main class="layout-college">
     <div class="container">
-      <div class="layout-college__inner" :class="{ grid: (helpNeed && width >= 1500) || (isQuestion && width > 980) }">
+      <div
+        class="layout-college__inner"
+        :class="{ grid: ((helpNeed && width >= 1500) || (isQuestion && width > 980)) && authStore.isAuthenticated }"
+      >
         <div class="layout-college__content">
-          <NuxtPage :collegeId="route.params.id" :info="info.data" :included="info.included" @blocksNeed="blocksNeed" @isQuestionSet="isQuestionSet" />
+          <NuxtPage
+            :collegeId="route.params.id"
+            :info="info.data"
+            :included="info.included"
+            :test-id="`link-college-${route.params.id}}`"
+            @blocksNeed="blocksNeed"
+            @isQuestionSet="isQuestionSet"
+          />
         </div>
-        <div v-if="helpNeed" class="layout-college__right" :class="{ absolute: width < 1500 && !isQuestion }">
-          <s-feedback :isMobile="false" :isQuestion="isQuestion" />
+        <div
+          v-if="helpNeed && authStore.isAuthenticated"
+          class="layout-college__right"
+          :class="{ absolute: width < 1500 && !isQuestion }"
+        >
+          <!-- <s-feedback :isMobile="false" :isQuestion="isQuestion" /> -->
         </div>
       </div>
       <s-quiz v-if="additionalNeed" class="section-l" />
-      <s-professions v-if="additionalNeed" :professions="professions" />
+      <s-professions v-if="additionalNeed" :apiProfessions="professions" />
       <s-form
         v-if="formNeed"
         class="layout-college__form section-l"
@@ -21,7 +35,9 @@
         title="Нужна помощь в выборе колледжа?"
         checkboxLabel="Я согласен на обработку своих персональных данных и получение информационных рассылок,
         а также принимаю условия
-        <a href='/' target='_blank' class='s-form__politics'>Политики   конфиденциальности сайта Колледжи.рф</a>"
+        <a href='/policy' target='_blank'
+        class='s-form__politics'>Политики   конфиденциальности сайта Колледжи.рф</a>"
+        section-id="college-page"
       />
     </div>
   </main>
@@ -31,7 +47,10 @@
 <script setup>
 import { useWindowSize } from '@vueuse/core';
 import getCollege from '~/api/colleges/getCollege';
-import getProfessions from '~/api/professions/getProfessions';
+import { useAuthStore } from '~/store/useAuthStore';
+// import getProfessions from '~/api/professions/getProfessions';
+
+const authStore = useAuthStore();
 
 const route = useRoute();
 
@@ -42,7 +61,7 @@ const professions = ref();
 onMounted(() => {
   setTimeout(async () => {
     info.value = await getCollege(route.params.id, {
-      include: 'city,monitorings,forms,galleries,admissionOffices',
+      include: 'city,monitorings,forms,media,childColleges',
     });
   });
 });

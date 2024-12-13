@@ -3,8 +3,8 @@
     <h3 class="s-popular-professions__title title-h3">Популярные профессии колледжа</h3>
     <div class="s-popular-professions__box">
       <swiper v-bind="swiperConfig" class="mySwiper">
-        <swiper-slide v-for="(profession, index) in professionsInfo" :key="index">
-          <m-college-professions-card forWhat="college" :info="profession" :specInfo="specialtiesInfo" />
+        <swiper-slide v-for="(profession, index) in professions" :key="index">
+          <m-college-professions-card :info="profession" :professions="profession" />
         </swiper-slide>
       </swiper>
 
@@ -28,9 +28,13 @@
         </div>
       </div>
       <div class="f-btn-college">
-        <NuxtLink :to="`/college/${collegeId}/professions`">
-          <a-button label="Все профессии" color="violet-5" size="medium" textSize="f-text-s" />
-        </NuxtLink>
+        <a-button
+          label="Все профессии"
+          color="violet-5"
+          size="medium"
+          textSize="f-text-s"
+          @click="navigateTo(`/college/${collegeId}/professions`)"
+        />
       </div>
     </div>
   </section>
@@ -39,9 +43,8 @@
 <script setup>
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Pagination, Navigation } from 'swiper/modules';
-import getSpecialties from '~/api/specialties/getSpecialties';
 
-const props = defineProps({
+defineProps({
   collegeId: { type: Number, default: 0 },
   professions: { type: Object, default: () => ({}) },
 });
@@ -71,29 +74,6 @@ const swiperConfig = reactive({
     },
   },
 });
-
-const specialtiesInfo = ref();
-const professionsInfo = ref();
-
-watch(props, () => {
-  professionsInfo.value = props.professions;
-  getSpecInfo();
-})
-
-const getSpecInfo = async () => {
-  let arr = [];
-  if (professionsInfo.value[0]) {
-    for (let prof of professionsInfo.value) {
-      arr.push(prof.id);
-    }
-  }
-  specialtiesInfo.value = await getSpecialties({
-    'filter[college_id]': props.collegeId,
-    'filter[professions]': String(arr),
-    'show[professionsIds]': true,
-  })
-  console.log(specialtiesInfo.value);
-}
 </script>
 
 <style lang="scss">

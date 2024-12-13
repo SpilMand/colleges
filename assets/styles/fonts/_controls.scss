@@ -63,6 +63,11 @@
   }
 }
 
+.f-h3 {
+  font-size: to-rem(26);
+  line-height: to-rem(26);
+}
+
 .f-link-white {
   color: var(--color-white);
   border-bottom: 1px solid;
@@ -265,6 +270,10 @@
   }
 }
 
+.section-xs {
+  padding-bottom: var(--a-padding-x10);
+}
+
 .right-border-carousel {
   @media (max-width: 1820px) {
     padding-right: var(--a-padding-x10);
@@ -403,4 +412,8 @@
 
 .t-right {
   text-align: right;
+}
+
+.italic {
+  font-style: italic;
 }

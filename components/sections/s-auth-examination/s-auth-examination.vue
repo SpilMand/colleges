@@ -15,6 +15,7 @@
                   size="large"
                   textSize="f-text-m"
                   class="s-form__button"
+                  test-id="btn-s-auth-reg-examination-submit"
                   :disabled="buttonDisabled"
                 />
               </div>
@@ -22,7 +23,11 @@
                 {{ text }}
                 <a class="f-link" href="mailto:info@">info@</a>
               </div>
-              <NuxtLink class="f-text-m mbt6 f-link t-center" to="/" @click="emit('close')"
+              <NuxtLink
+                class="f-text-m mbt6 f-link t-center"
+                to="/"
+                test-id="link-s-auth-reg-examination-back"
+                @click="emit('close')"
                 >Вернуться на главный экран</NuxtLink
               >
             </div>
@@ -48,16 +53,16 @@ const onSubmit = async () => {
     };
     await authStore.resend(formattedValues);
   } catch (error) {
-    console.log('error', error);
+    console.error(error);
   }
   resetTimer();
 };
 
 const emit = defineEmits(['openAuth', 'close']);
 
-const change = () => {
-  emit('openRegChange');
-};
+// const change = () => {
+//   emit('openRegChange');
+// };
 
 const countdown = ref(240);
 const buttonDisabled = ref(true);

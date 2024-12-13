@@ -2,29 +2,50 @@
   <footer class="s-footer">
     <div class="container">
       <div class="s-footer__box">
-        <nuxt-link to="/" class="s-footer__logo" aria-label="Перейти на главную">
+        <nuxt-link to="/" class="s-footer__logo" aria-label="Перейти на главную" test-id="link-s-footer-back">
           <img :src="logoSrc" loading="lazy" :alt="logoAlt" />
         </nuxt-link>
         <m-menu-footer :items="menuItems" />
         <div class="s-footer__contacts">
-          <a :href="'tel:' + phoneNumber" class="s-footer__phone s-footer__contacts-item f-text-s f-font-700">
+          <a
+            :href="width > 768 ? null : 'tel:' + phoneNumber"
+            class="s-footer__phone s-footer__contacts-item f-text-s f-font-700"
+            test-id="link-s-footer-phone"
+          >
             {{ formattedPhoneNumber }}
           </a>
-          <a :href="'mailto:' + emailAddress" class="s-footer__email s-footer__contacts-item f-text-s f-font-700">
+          <a
+            :href="'mailto: ' + emailAddress"
+            class="s-footer__email s-footer__contacts-item f-text-s f-font-700"
+            test-id="link-s-footer-email"
+          >
             {{ emailAddress }}
           </a>
-          <m-social :items="social" />
+          <m-social section-id="s-footer" :items="social" />
         </div>
         <div class="s-footer__policy f-text-xs">{{ copyrightText }}</div>
-        <a :href="userAgreementLink" class="s-footer__policy f-text-xs">{{ userAgreementText }}</a>
-        <a :href="privacyPolicyLink" class="s-footer__policy f-text-xs">{{ privacyPolicyText }}</a>
+        <a
+          :href="userAgreementLink"
+          target="_blank"
+          class="s-footer__policy f-text-xs"
+          test-id="link-s-footer-agreement"
+          >{{ userAgreementText }}</a
+        >
+        <a
+          :href="privacyPolicyLink"
+          target="_blank"
+          class="s-footer__policy f-text-xs"
+          test-id="link-s-footer-policy"
+          >{{ privacyPolicyText }}</a
+        >
       </div>
     </div>
   </footer>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { useWindowSize } from '@vueuse/core';
+const { width } = useWindowSize();
 
 const logoSrc = '/img/footer/logo.svg';
 const logoAlt = 'колледжи';
@@ -33,10 +54,6 @@ const social = ref([
   {
     href: 'https://vk.com/kolledzhirf',
     icon: 'vk',
-  },
-  {
-    href: 'https://www.youtube.com/@kolledzhirf ',
-    icon: 'youtube',
   },
   {
     href: 'https://t.me/kolledzhirf',
@@ -50,6 +67,10 @@ const menuItems = ref([
     text: 'О проекте',
   },
   {
+    href: '/contacts',
+    text: 'Контакты',
+  },
+  {
     href: '/applicants',
     text: 'Абитуриентам',
   },
@@ -58,7 +79,7 @@ const menuItems = ref([
     text: 'Родителям',
   },
   {
-    href: '/foru',
+    href: '/forcolleges',
     text: 'Информация для колледжей',
   },
 ]);
@@ -66,14 +87,14 @@ const menuItems = ref([
 const phoneNumber = '+78003023620';
 const formattedPhoneNumber = '8 800 302-36-20';
 
-const emailAddress = 'example@email.ru';
+const emailAddress = '';
 
 const copyrightText = '© 2023 Колледж.рф. Все права защищены';
 
-const userAgreementLink = '#';
+const userAgreementLink = '/agreement';
 const userAgreementText = 'Пользовательское соглашение';
 
-const privacyPolicyLink = '#';
+const privacyPolicyLink = '/policy';
 const privacyPolicyText = 'Политика конфиденциальности';
 </script>
 

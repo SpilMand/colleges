@@ -3,13 +3,13 @@
     <div class="s-main__wrapper">
       <div class="container">
         <div class="s-main__box">
-          <h1 class="s-main__title" :aria-lsabel="title">
-            <img src="/img/main/title.svg" loading="lazy" :alt="title" />
-            <span class="d-none">{{ title }}</span>
+          <h1 class="s-main__title" :aria-lsabel="pageTitle">
+            <img src="/img/main/title.svg" loading="lazy" :alt="pageTitle" />
+            <span class="d-none">{{ pageTitle }}</span>
           </h1>
           <div class="s-main__subtitle subtitle f-font-700">{{ subtitle }}</div>
-          <a-search size="big" :isSearch="!isSearch" />
-          <m-main-list :list="list" />
+          <a-search v-if="false" section-id="s-main" size="big" :isSearch="!isSearch" />
+          <m-main-list section-id="s-main" :list="list" />
         </div>
       </div>
     </div>
@@ -35,10 +35,13 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
+  pageTitle: {
+    type: String,
+    default: 'Колледжи',
+  },
 });
 const isSearch = ref(false);
-const title = ref('колледжи');
-const subtitle = ref('Подбери профессиональное образование — быстро и легко');
+const subtitle = ref('Подбери профессиональное образование — быстро и легко');
 
 const list = ref({});
 watchEffect(() => {

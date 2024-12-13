@@ -11,24 +11,34 @@
         <nuxt-link
           v-for="(item, index) in data.items"
           :key="index"
-          :to="data.name + '/' + item.id"
+          :to="getLink(data.name, item)"
           class="m-about-card__item f-text-m violet-100 f-link"
+          :test-id="`link-m-about-card-${data.id}`"
         >
           {{ item?.name.includes('профессия ') ? item?.name.split('профессия ')[1] : item?.name }}
         </nuxt-link>
       </div>
     </div>
-    <nuxt-link
+    <a-button
       v-if="!data.class"
-      :to="data.link + (selectedCityOptionSlug ? '/' + selectedCityOptionSlug : '')"
-      class="m-about-card__button"
+      class="m-about-card__button f-text-m w-100"
+      label="Смотреть все"
+      color="outline"
+      size="extra-large"
       :class="data.class"
-    >
-      <a-button class="f-text-m w-100" label="Смотреть все" color="outline" size="extra-large" />
-    </nuxt-link>
-    <a v-else href="#directions" class="m-about-card__button" :class="data.class">
-      <a-button class="f-text-m w-100" label="Смотреть все" color="outline" size="extra-large" />
-    </a>
+      test-id="btn-m-about-card-all"
+      @click="navigateTo(data.link + (selectedCityOptionSlug ? '/' + selectedCityOptionSlug : ''))"
+    />
+    <a-button
+      v-else
+      class="m-about-card__button f-text-m w-100"
+      label="Смотреть все"
+      color="outline"
+      size="extra-large"
+      :class="data.class"
+      test-id="btn-m-about-card-all"
+      @click="navigateTo('#directions')"
+    />
   </div>
 </template>
 
@@ -43,6 +53,22 @@ defineProps({
 });
 const cityStore = useCityIdStore();
 const selectedCityOptionSlug = computed(() => cityStore.$state.selectedOptionSlug);
+
+const getLink = (name, { id, slug }) => {
+  if (name === 'directions' && slug !== undefined) {
+    return 'colleges' + '/' + slug;
+  }
+
+  switch (name) {
+    case 'specialties':
+      return 'specialty' + '/' + id;
+    case 'professions':
+      return 'profession' + '/' + id + '/specialties';
+    default:
+      return name + '/' + id;
+  }
+};
+
 onMounted(() => {
   scrollToSection();
 });

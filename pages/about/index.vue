@@ -3,11 +3,11 @@
     <a-breadcrumbs :items="breadcrumbs" />
   </div>
 
-  <s-main-about />
+  <s-main-about img="/img/about-page/title.svg" title="колледжи" section-id="about-page" :description="description" />
 
   <div class="container">
     <div class="s-main-about-box">
-      <div class="title-about">Ваш компас в мире колледжей</div>
+      <div class="title-about">{{ pageTitle }}</div>
       <p class="text-about">
         На сайте представлены
         <b>{{ getTitle(apiColleges, 'колледж') }}</b> по 123&nbsp;городам России, а также
@@ -41,19 +41,25 @@
 
   <s-form
     title="Свяжитесь с нами: мы здесь, чтобы помочь"
-    subtitle="Если у Вас остались вопросы по работе сайта, 
-      пишите нам на электронную почту <a class='f-link-white' 
-      href='mailto:1234@ruscollege.ru'>1234@ruscollege.ru</a> или 
+    subtitle="Если у Вас остались вопросы по работе сайта,
+      пишите нам на электронную почту <a class='f-link-white'
+      href='mailto:1234@ruscollege.ru'>1234@ruscollege.ru</a> или
       оставьте свои контактные данные и мы свяжемся с Вами."
     checkboxLabel="Я согласен на обработку своих персональных данных и получение информационных рассылок,
         а также принимаю условия
-        <a href='/' target='_blank' class='s-form__politics'>Политики   конфиденциальности сайта Колледжи.рф</a>"
+        <a href='/policy' target='_blank'
+        class='s-form__politics'>Политики   конфиденциальности сайта Колледжи.рф</a>"
     type="stretch"
+    section-id="about-page"
   />
 </template>
 
 <script setup>
 import { getTitle } from '~/composables/utils';
+import useCanonicalHead from '~/composables/useCanonicalHead';
+
+useCanonicalHead();
+
 defineProps({
   apiSpecialties: {
     type: Object,
@@ -68,6 +74,16 @@ defineProps({
     default: () => ({}),
   },
 });
+const pageTitle = ref('Ваш компас в мире колледжей');
+
+useHead({
+  title: `${pageTitle.value} | Колледжи.рф`,
+  // eslint-disable-next-line max-len
+  description: `${pageTitle.value}. Лучший сайт для абитуриентов колледжей. Помогаем с подбором профессии, сравнением колледжей, подсчетом баллов ЕГЭ и ОГЭ. Начните путь к успешной карьере с нами!`,
+});
 const showDescText = ref(false);
 const breadcrumbs = [{ label: 'О проекте', link: '/about' }];
+const description = `— это сайт-навигатор для абитуриентов, что ищут
+  учереждения среднего профессионального образования для поступления.
+  Проект будет полезен как для абитуриентов, так и для их родителей.`;
 </script>

@@ -15,6 +15,7 @@
                   placeholder="E-mail"
                   class="s-form__input f-text-m"
                   :class="{ invalid: errors.email, valid: eValid.valid }"
+                  test-id="input-s-auth-reg-recovery-email"
                   @blur="eBlur"
                 />
                 <span v-if="errors.email" class="f-text-xs red mbt2">{{ errors.email }}</span>
@@ -30,6 +31,7 @@
                   size="large"
                   textSize="f-text-m"
                   class="s-form__button"
+                  test-id="btn-s-auth-reg-recovery-submit"
                   :disabled="isSubmitting || errors.email || !value.email"
                 />
               </div>
